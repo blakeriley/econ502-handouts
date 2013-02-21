@@ -1,0 +1,357 @@
+\documentclass[letter, 10pt]{article}
+% Change "article" to "report" to get rid of page number on title page
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{setspace}
+\usepackage{graphicx,float,wrapfig}
+%\usepackage{parskip}
+\usepackage{enumerate}
+
+% In case you need to adjust margins:
+\topmargin=-0.45in      %
+\evensidemargin=0in     %
+\oddsidemargin=0in      %
+\textwidth=6.5in        %
+\textheight=9.0in       %
+\headsep=0.25in         %
+%\parindent=0in
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Format related commands
+
+
+% Includes a figure
+% The first parameter is the label, which is also the name of the figure
+%   with or without the extension (e.g., .eps, .fig, .png, .gif, etc.)
+%   IF NO EXTENSION IS GIVEN, LaTeX will look for the most appropriate one.
+%   This means that if a DVI (or PS) is being produced, it will look for
+%   an eps. If a PDF is being produced, it will look for nearly anything
+%   else (gif, jpg, png, et cetera). Because of this, when I generate figures
+%   I typically generate an eps and a png to allow me the most flexibility
+%   when rendering my document.
+% The second parameter is the width of the figure normalized to column width
+%   (e.g. 0.5 for half a column, 0.75 for 75% of the column)
+% The third parameter is the caption.
+\newcommand{\scalefig}[3]{
+  \begin{figure}[ht!]
+    % Requires \usepackage{graphicx}
+    \centering
+    \includegraphics[width=#2\columnwidth]{#1}
+    %%% I think \captionwidth (see above) can go away as long as
+    %%% \centering is above
+    %\captionwidth{#2\columnwidth}%
+    \caption{#3}
+    \label{#1}
+  \end{figure}}
+
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Custom commands
+
+\newcommand{\twopartdef}[4]
+{
+	\left\{
+		\begin{array}{ll}
+			#1 & \mbox{if } #2 \\
+			#3 & \mbox{if } #4
+		\end{array}
+	\right.
+}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\operatorname{E}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% The main document content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\begin{spacing}{1.1}
+
+\noindent
+\textbf{Handout 1} \\
+Econ 502 \\
+January 25, 2013 \\
+TA: Blake Riley \\
+
+\begin{center}
+{\Large Microeconomic Theory I: Spring 2013}
+\end{center}
+
+\section{Static games of complete information}
+
+\begin{definition}
+  Complete information: Each player's payoff function is
+  commonly known among all the players.
+\end{definition}
+
+\subsection{Elements of a static game of complete
+  information}
+
+\begin{definition}
+  A game with $N$ players in \textbf{normal form
+    representation} $\Gamma_N$ is a collection of players
+    $N$, strategy sets $S_i$ and payoff functions
+    $u_i(\cdot)$ where $u_i \,:\, \prod_{j=1}^N S_j \to
+    \R$, i.e. $\Gamma_N = \left(N, \{S_i, u_i(\cdot)\}_{i=1}^N\right)$.
+\end{definition}
+
+The elements $s_i \in S_i$ are called agents $i$'s pure strategies. In a
+normal form game, the players choose their strategies simultaneously. This
+does not necessarily imply that the parties act simultaneously.
+
+\subsection{Strategies}
+
+Strategies contain all possible decisions relevant to a player's
+actions. Imagine strategies as a book of instructions detailed enough for
+someone else to play as your proxy without needing additional
+information. This will be more important to remember when we consider
+dynamic games.
+
+\begin{definition}
+  (Domination) Given two strategies $s_i, s'_i \in S_i$ in the
+  normal form game $\Gamma_N$, we say $s_i$ \textbf{strictly dominates}
+  $s'_i$ if $\forall s_{-i} \in S_{-i} = \prod_{j\neq i} S_j$, player $i$ has
+  $u_i(s_i,s_{=i}) > u_i(s'_i, s_{-i})$. The strategy $s_i$ \textbf{weakly
+    dominates} $s'_i$ if $\forall s_{-i} \in S_{-i}$,
+  player $i$ has $u_i(s_i,s_{=i}) \ge u_i(s'_i, s_{-i})$ and $\exists
+  s^*_{-i} \in S_{-i}$ such that $u_i(s_i, s^*_{-i}) > u_u(s'_i,
+  s^*_{-i})$. The strategy $s_i$ \textbf{very weakly
+    dominates} $s'_i$ if $\forall s_{-i} \in S_{-i}$,
+  player $i$ has $u_i(s_i,s_{=i}) \ge u_i(s'_i, s_{-i})$.
+\end{definition}
+
+\begin{definition}
+  (Dominant strategies) A strategy $s_i \in S_i$ is \textbf{strictly
+    (weakly, very weakly)
+    dominant} if $s_i$ strictly (weakly, very weakly) dominates all other strategies in $S_i$.
+\end{definition}
+
+Notice each player can only have a single strictly or weakly dominant
+strategy by these definitions, but might have many very weakly dominant
+strategies. Some other sources will refer to very weak dominance as weak dominance.
+
+\begin{definition}
+  (Mixed strategies) Given player $i$'s finite pure
+  strategy set $S_i$, a \textbf{mixed strategy} for player $i$ is
+  a function $\sigma_i : S_i \to [0,1]$ which assigns
+  each pure strategy a probability that it will be
+  played, where $\sum_{s_i\in S_i} \sigma_i(s_i) = 1$.
+\end{definition}
+
+Once we use mixed strategies, the basic notion of a game in normal form has
+to be adjusted to $\Gamma_N = \left(N, \{\Delta(S_i),
+  u_i(\cdot)\}_{i=1}^N\right)$, where $\Delta(S)$ is the probability
+simplex over set $S$. Pure strategies can now be considered as degenerate
+mixed strategies. The notions of dominance carry over to mixed
+strategies.
+
+By iteratively removing dominated strategies, we end up with a refined set
+of strategies that can plausibly be chosen by each player. This refined set
+is our first example of a solution concept.
+
+\begin{theorem}
+  (Facts about iterated removal of strictly dominated strategies) For any
+  game with compact strategy spaces and continuous payoff functions
+  \begin{enumerate}[a)]
+  \item The set of surviving strategies is compact and
+    nonempty (so it's meaningful to talk about).
+  \item The order of deletion does not matter.
+  \item Common knowledge of rationality in a game of complete infomation is
+    sufficient to ensure players will only use surviving strategies and
+    have common knowledge of that fact.
+  \end{enumerate}
+\end{theorem}
+
+However, if weakly dominated strategies are also eliminated, then
+order might matter and it sometimes cannot be common knowledge that players
+will not use weakly dominated strategies.
+
+\begin{definition}
+  A game is \textbf{dominance solvable} if iterated deletion of strictly
+  dominated strategies leaves a single strategy profile. Sometimes,
+  dominance solvable is also used to refer to a single strategy profile
+  left after iterated deletion of all weakly dominated strategies at each
+  stage.
+\end{definition}
+
+\begin{lemma}
+  If a pure strategy $s_i$ is strictly dominated, then so is any mixed
+  strategy that plays $s_i$ with positive probability.
+\end{lemma}
+
+\begin{definition}
+  (Best responses) A strategy $\sigma_i$ is a \textbf{best response} for
+  player $i$ to his rivals' strategies $\sigma_{-i}$ if $\forall \sigma'_i
+  \in \Delta(S_i),\; u_i(\sigma_i, \sigma_{-i}) \geq u_i(\sigma'_i,
+  \sigma_{-i})$. Strategy $\sigma_i$ is \textbf{never a best response} if
+  there is no $\sigma_{-i}$ for which $\sigma_i$ is a best response.
+\end{definition}
+
+\begin{definition}
+  (Rationalizable strategies) The strategies in $\Delta(S_i)$ that survive
+  the iterated removal of strategies that are never best responses are
+  known as \textbf{rationalizable strategies}.
+\end{definition}
+
+\begin{theorem}
+  (Facts about rationalizable strategies) For any game with compact
+  strategy spaces and continuous payoff functions
+  \begin{enumerate}[a)]
+  \item The set of rationalizable strategies is compact and
+    nonempty (so it's meaningful to talk about).
+  \item The order of deletion does not matter.
+  \item Common knowledge of rationality and the game structure is
+    sufficient to ensure players will only play rationalizable strategies
+    and have common knowledge of that fact.
+  \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+  (Equivalence of iterated strictly undominated strategies and
+  rationalizable strategies) If $N=2$, the set of iterated strictly
+  undominated strategies is exactly the set of rationalizable
+  strategies. Some iteratively strictly undominated strategies may not be
+  rationalizable if $N>2$. Some rationalizable strategies may not survive
+  iterated deletion of weakly dominated strategies.
+\end{theorem}
+
+The non-equivalence of the two concepts when $N>2$ comes from an implicit
+assumption that other players randomize independently when using mixed
+strategies. This is makes sense if we think the players are
+actually using mixed strategies. In other contexts, it might be more
+natural to think of all players using pure strategies and best-responses to
+mixed strategies representing best-responses to probabilistic conjectures
+about which pure strategy will be played. In this case, a player could
+plausibly think the strategy choices of other players are correlated. This
+leads to the notion of correlated rationalizability. Correlated
+rationalizability turns out to be equivalent to iterated deletion of
+strictly dominated strategies in general.
+
+\begin{theorem}
+  In the first- and second-price bid auctions, all bids are rationalizable.
+\end{theorem}
+
+\begin{definition}
+  (Nash equilibrium) A mixed strategy profile $\sigma = \left(\sigma_1,
+    \ldots, \sigma_N\right)$ is a \textbf{Nash equilibrium} of a game
+  if \[\forall i \in N,\; \forall \sigma'_i\in \Delta(S_i),\;\;
+  u_i(\sigma_i, \sigma_{-i}) \geq u_i(\sigma'_i, \sigma_{-i}),\] i.e.~if
+  every player's strategy is a best response to the other strategies in the
+  profile.
+\end{definition}
+
+\begin{lemma}
+  In Nash equilibrium, players are indifferent between all pure strategies
+  they play with positive probability. Also, each pure strategy played with
+  positive probability is rationalizable and weakly dominates those never
+  played. However, equilibrium strategies might be weakly dominated.
+\end{lemma}
+
+\begin{theorem}
+  Given a game $\Gamma = \left\{N, \{X_i, u_i\}_{i=1}^N\right\}$ in normal
+  form such that
+  \begin{enumerate}[a)]
+  \item $X_i$ is a nonempty, compact, and convex subset of a finite
+    dimensional Euclidean space for every $i$ and
+  \item $u_i : \prod_{j=1}^N X_j \to \R$ is quasiconcave and continuous,
+  \end{enumerate}
+  $\Gamma$ has a Nash equilibrium in pure strategies, i.e. there exists
+  $x^* \in \prod_{i=1}^N X_i$ such that $\forall i \in N$ and $\forall
+  x_i\in X_i$, $ u_i(x_i^*, x_{-i}^*) \geq u_i(x_i, x_{-i}^*)$.
+\end{theorem}
+
+\begin{theorem}
+  (Glicksburg's theorem) Given a game where the strategy spaces are
+  non-empty, compact subsets of a complete metric space and payoff
+  functions are continuous, there exists a mixed-strategy Nash equilibrium.
+\end{theorem}
+
+\section{Static games of incomplete information}
+
+In games of incomplete information, the agents do not know the other
+agents' preferences or beliefs with certainty. All private information of a
+player, including their preferences, private knowledge, beliefs about the
+other players' preferences, beliefs about the other players' beliefs, and
+so on, is summarized by a variable $\theta_i \in \Theta_i$ known as the
+player's type. Static games of incomplete information are commonly called
+Bayesian games.
+
+\begin{definition}
+  A \textbf{Bayesian game} is a collection $\Gamma_N = \left(N, \{\Delta(S_i),
+    u_i(\cdot), \Theta_i\}_{i=1}^N, F(\cdot)\right)$. The type space $\Theta_i$
+  is the support of a random variable $\theta_i$ representing the private
+  information of agent $i$.  The utility of each agent is $u_i: \left(
+    \prod_{j=1}^N S_j\right) \times \Theta_i  \to \R$. Finally, $F(\theta_1, \ldots, \theta_N)$ is the
+  joint probability distribution of the $\theta_i$'s and is assumed to be
+  common knowledge.
+\end{definition}
+
+As long as the type spaces are sufficiently descriptive (including possibly
+infinite hierarchies of beliefs), the common knowledge assumption is
+without loss of generality. In this context, a strategy for agent $i$ is a
+function $s_i(\theta_i)$ that assigns a strategy for each realization of
+the random variable $\theta_i$. Denote the set of all such functions as
+$Z_i$.
+
+\begin{definition}
+  A profile of decision rules $(s_1(\cdot), \ldots, s_N(\cdot))$ is a
+  \textbf{Bayesian Nash Equilibrium} of a Bayesian game if $\forall i \in N$, $\forall s'_i \in Z_i$, and $\forall \theta_i
+  \in \Theta_i$ occurring with positive
+  probability \[\E_{\theta_{-i}}\left[u_i(s_i(\theta_i), s_{-i}(\theta_{-i}),
+    \theta_i) \;|\; \theta_i \right] \geq \E_{\theta_{-i}}\left[u_i(s'_i(\theta_i), s_{-i}(\theta_{-i}),
+    \theta_i) \;|\; \theta_i \right], \] where the expectation is taken over
+  realizations of the other players' types conditional on player $i$'s type.
+\end{definition}
+
+\section{Refinements}
+
+\begin{definition}
+  A Nash equilibrium $\sigma$ of a normal form game is
+  \textbf{trembling-hand perfect} iff there is some sequence of totally
+  mixed strategies $\{\sigma^k\}_{k=1}^\infty$ such that $\forall i,k$,
+  $\lim \sigma^k = \sigma$ and $\sigma_i$ is a best response to every
+  element of $\sigma_{-i}^k$.
+\end{definition}
+
+\begin{lemma}
+  If $\sigma$ is a normal form trembling-hand perfect Nash equilibrium, then
+  $\sigma_i$ is not a weakly dominated strategy for any $i$. Hence, no weakly
+  dominated pure strategy is played with positive probability.
+\end{lemma}
+
+\begin{theorem}
+  Every game with finite strategy sets in normal form has a trembling-hand
+  perfect Nash equilibrium.
+\end{theorem}
+
+\section{Misc}
+
+\subsection{Order statistics}
+
+\begin{definition}
+  The pdf of $k$-th order statistic of $n$ random variables $X_1, \ldots, X_n$
+  with common pdf $f(x)$ and distribution function $F(x)$ is \[f_{X_{(k)}}(x) =
+  \frac{n!}{(k-1)!(n-k)!}F(x)^{k-1}\left(1-F(x)\right)^{n-k} f(x)\] In
+  particular, the pdf of $n$-th order statistic (i.e. the maximum)
+  is \[f_{X_{(n)}}(x) = n F(x)^{n-1} f(x)\] and the pdf of the $n-1$-th order
+  statistic is \[f_{X_{(n-1)}}(x) = n(n-1) F(x)^{n-2} \left(1-F(x)\right) f(x)\]
+\end{definition}
+
+\subsection{Leibniz integral rule}
+
+The Leibniz rule for differentiating under the integral sign can be useful while
+deriving FOCs in problems with uncertainty:
+
+\[\frac{d}{d\alpha}\int_{a(\alpha)}^{b(\alpha)} f(x,\alpha)\,dx = \frac{d b(\alpha)}{d \alpha}\,f(b(\alpha),\alpha)-\frac{d a(\alpha)}{d \alpha}\,f(a(\alpha),\alpha)+ \int_{a(\alpha)}^{b(\alpha)}\frac{\partial}{\partial \alpha}\,f(x,\alpha)\,dx\]
+
+%%%%%%%%%%%%%%%
+\end{spacing}
+\end{document}
+%%%%% FIN %%%%%
+%%%%%%%%%%%%%%%

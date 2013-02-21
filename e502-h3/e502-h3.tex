@@ -1,0 +1,159 @@
+\documentclass[letter, 10pt]{article}
+% Change "article" to "report" to get rid of page number on title page
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{setspace}
+\usepackage{graphicx,float,wrapfig}
+%\usepackage{parskip}
+\usepackage{enumerate}
+
+% In case you need to adjust margins:
+\topmargin=-0.45in      %
+\evensidemargin=0in     %
+\oddsidemargin=0in      %
+\textwidth=6.5in        %
+\textheight=9.0in       %
+\headsep=0.25in         %
+%\parindent=0in
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Format related commands
+
+
+% Includes a figure
+% The first parameter is the label, which is also the name of the figure
+%   with or without the extension (e.g., .eps, .fig, .png, .gif, etc.)
+%   IF NO EXTENSION IS GIVEN, LaTeX will look for the most appropriate one.
+%   This means that if a DVI (or PS) is being produced, it will look for
+%   an eps. If a PDF is being produced, it will look for nearly anything
+%   else (gif, jpg, png, et cetera). Because of this, when I generate figures
+%   I typically generate an eps and a png to allow me the most flexibility
+%   when rendering my document.
+% The second parameter is the width of the figure normalized to column width
+%   (e.g. 0.5 for half a column, 0.75 for 75% of the column)
+% The third parameter is the caption.
+\newcommand{\scalefig}[3]{
+  \begin{figure}[ht!]
+    % Requires \usepackage{graphicx}
+    \centering
+    \includegraphics[width=#2\columnwidth]{#1}
+    %%% I think \captionwidth (see above) can go away as long as
+    %%% \centering is above
+    %\captionwidth{#2\columnwidth}%
+    \caption{#3}
+    \label{#1}
+  \end{figure}}
+
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Custom commands
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\operatorname{E}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% The main document content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\begin{spacing}{1.1}
+
+\noindent
+\textbf{Handout 3} \\
+Econ 502 \\
+February 7, 2012 \\
+TA: Blake Riley \\
+
+\section{Finitely repeated games}
+
+Unsurprisingly, in repeated games we're analyzing a
+specific game (such as the prisoners' dilemma, battle of
+the sexes, etc) that is played over and over again in a
+supergame. At each stage of the repetition, let $G$
+denote a static game of complete information in which the
+players involved choose their corresponding actions
+simultaneously. The game $G$ will then be called the
+\textbf{stage game} of the full game.
+
+\begin{definition}
+  Given a stage game $G$, let $G(T)$ denote the finitely
+  repeated game in which $G$ is played $T<\infty$ times,
+  with the outcomes of all preceding plays observed
+  before the next play begins. The payoffs of $G(T)$ are
+  simply the sum of the payoffs for each of the $T$ stages.
+\end{definition}
+
+\begin{theorem}
+  If the stage game $G$ has a unique Nash equilibrium,
+  then for all finite $T$, the repeated game $G(T)$ has a
+  unique subgame-perfect outcome where the unique NE is
+  played at every stage.
+\end{theorem}
+
+We have seen that if there are multiple equilibria at every
+stage, then there might be subgame-perfect NEs that do
+not involve playing ``stage-game equilibrium
+strategies''. Remember the example from last class where
+this occurred with the two-stage game.
+
+\section{Infinitely repeated games}
+
+In finitely repeated games, there might be credible threats that influence
+current behavior if the stage game has multiple equilibria. A stronger
+result can be stated for the infinitely repeated case: even if the stage
+game has a unique NE, there might be subgame-perfect NEs of the infinitely
+repeated game in which no choice of actions in any stage is a NE of $G$.
+
+\begin{definition}
+  Given a stage game $G$, let $G(\infty, \delta)$ denote
+  the infinitely repeated game in which $G$ is repeated
+  indefinitely and players share the discount factor
+  $\delta$. For each $t$, the outcomes the the $t-1$
+  preceding plays are observed before the stage
+  begins. The payoffs of each player are the present
+  values of the sequence of payoffs from the stage games.
+\end{definition}
+
+\subsection{Payoffs}
+ In contrast to simply summing up payoffs like in the
+ finitely repeated games, we're now discounting future
+ payoffs to make the near future more salient and to keep
+ things tractable. Given a discount factor $\delta$ and a
+ sequence of payoffs $\{\pi_t^i\}_{t=1}^\infty$ to player
+ $i$, the total payoff is
+ $\pi_1^i+\delta\pi_2^i+\delta^2\pi_3^i+\ldots = \sum
+ \delta^{t-1} \pi_t$. Occasionally this is rescaled by
+ $1-\delta$ so we get rid of this factor when stage game
+ payoffs are identical across all periods.
+
+\subsection{Folk theorems}
+
+\begin{definition}
+  In an $n$-player game, call the vector $(x_1,\ldots,
+  x_n)$ a \textit{feasible vector} in stage game $G$ if each $x_i$
+  is a convex combination of the pure-strategy payoffs of $G$.
+\end{definition}
+
+\begin{theorem}
+  (Friedman 1971) Let $G$ be a finite, static game of
+  complete information with $n$ players. Let $(e_1,
+  \ldots, e_n)$ be the payoffs from a Nash equilibrium of
+  $G$, and let $(x_1, \ldots, x_n)$ be any other feasible
+  payoffs from $G$, If $x_1 > e_i$ for each player $i$
+  and $\delta$ is sufficiently close to one, then there
+  exists a subgame-perfect Nash equilibrium of the
+  infinitely repeated game $G(\infty, \delta)$ that
+  achieves $(x_1, \ldots, x_n)$ as payoffs.
+\end{theorem}
+
+
+%%%%%%%%%%%%%%%
+\end{spacing}
+\end{document}
+%%%%% FIN %%%%%
+%%%%%%%%%%%%%%%

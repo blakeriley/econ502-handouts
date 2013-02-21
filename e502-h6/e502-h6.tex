@@ -1,0 +1,254 @@
+\documentclass[letter, 10pt]{article}
+% Change "article" to "report" to get rid of page number on title page
+\usepackage{mathtools,amsfonts,amsthm,amssymb}
+\usepackage{setspace}
+\usepackage{graphicx,float,wrapfig}
+%\usepackage{parskip}
+\usepackage{enumerate}
+
+% In case you need to adjust margins:
+\topmargin=-0.45in      %
+\evensidemargin=0in     %
+\oddsidemargin=0in      %
+\textwidth=6.5in        %
+\textheight=9.0in       %
+\headsep=0.25in         %
+%\parindent=0in
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Format related commands
+
+
+% Includes a figure
+% The first parameter is the label, which is also the name of the figure
+%   with or without the extension (e.g., .eps, .fig, .png, .gif, etc.)
+%   IF NO EXTENSION IS GIVEN, LaTeX will look for the most appropriate one.
+%   This means that if a DVI (or PS) is being produced, it will look for
+%   an eps. If a PDF is being produced, it will look for nearly anything
+%   else (gif, jpg, png, et cetera). Because of this, when I generate figures
+%   I typically generate an eps and a png to allow me the most flexibility
+%   when rendering my document.
+% The second parameter is the width of the figure normalized to column width
+%   (e.g. 0.5 for half a column, 0.75 for 75% of the column)
+% The third parameter is the caption.
+\newcommand{\scalefig}[3]{
+  \begin{figure}[ht!]
+    % Requires \usepackage{graphicx}
+    \centering
+    \includegraphics[width=#2\columnwidth]{#1}
+    %%% I think \captionwidth (see above) can go away as long as
+    %%% \centering is above
+    %\captionwidth{#2\columnwidth}%
+    \caption{#3}
+    \label{#1}
+  \end{figure}}
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}[section]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Custom commands
+
+\newcommand{\twopartdef}[4]
+{
+	\left\{
+		\begin{array}{ll}
+			#1 & \mbox{if } #2 \\
+			#3 & \mbox{if } #4
+		\end{array}
+	\right.
+}
+
+\newcommand{\R}{\mathbb{R}}
+\DeclareMathOperator{\E}{E}
+\newcommand{\tto}{\twoheadrightarrow}
+
+\DeclareMathOperator{\SPA}{SPA}
+\DeclareMathOperator{\FPA}{FPA}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% The main document content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\begin{spacing}{1.1}
+
+\noindent
+\textbf{Handout 6} \\
+Econ 502 \\
+March 26, 2012 \\
+TA: Blake Riley \\
+
+\begin{center}
+{\Large Microeconomic Theory I: Spring 2012}
+\end{center}
+
+\section{Auction Theory}
+
+Remember that if $v\in \R^n\,iid \sim F$, then
+$P(v_i>v_j, \forall j \ne i) = F(v_i)^{n-1}$, so
+the density of the largest order statistic of $n-1$ other
+agents is $(n-1)F(v_{(1)})^{n-2} f(v_{(1)})$.
+
+
+\subsection{First-price Auction}
+
+Denote the second-price auction with reserve price $r$
+and entry fee $c$ as $\SPA(r,c)$. We have the following
+result:
+
+\begin{theorem}[$\SPA(r,0)$ in dominant strategies] The
+  following consitutes a weakly dominant strategy for
+  player $i$ in the $\SPA(r,0)$:
+  \begin{equation}
+    b(v) =
+    \begin{cases}
+       \mathrm{No} & \mbox{if } v < r \\
+      v & \mbox{if } v \ge r
+    \end{cases}
+  \end{equation}
+  where $ \mathrm{No}$ indicates no participation.  
+\end{theorem}
+section{Second-price auction}
+
+Let $v_0(r,c)$ be the $marginal value$, the valuation for
+which a potential bidder is indifferent between
+participating and not. This is part of the equilibrium,
+and clearly depends on the distribution of values $F$.
+
+\begin{theorem}[$\SPA(r,c)$]
+  Assume $0 \le c \le 1-r \le 1$. Then, a BNE of
+  the $\SPA(r,c)$ with $n$ bidders consists of each player using the
+  following strategy:
+    \begin{equation}
+    b(v) =
+    \begin{cases}
+      \mathrm{No} & \mbox{if } v < v_0(r,c) \\
+      v & \mbox{if } v \ge v_0(r,c)
+    \end{cases}
+  \end{equation}
+  where $v_0(r,c)$ solves $(v_0 - r)F(v_0)^{n-1} = c$ 
+\end{theorem}
+
+\section{First-price Auction}
+
+Denote the first-price auction with reserve price $r$ and
+entry fee $c$ as $\FPA(r,c)$. 
+
+\begin{theorem}[Symmetric Equilibrium in $\FPA(0,0)$]
+  Consider a $\FPA(0,0)$ with $n$ bidders and iid
+  private values with distribution $F$. THen the
+  following is a symmetric $BNE$ strategy:
+  \begin{equation}
+    \label{eq:1}
+    b(v) = \int_0^v t \frac{g(t)}{G(v)}\,dt = v -
+    \int_0^v \frac{G(t)}{G(v)}\, dt = \E[v_{(1)}\,|\,v_{(1)}<v]
+  \end{equation}
+  where $G(v) = F(v)^{n-1}$ and $v_{(1)}$ is the first
+  order statistic among over $n-1$ agents. Moreover, $b$
+  is strictly increasing on $[0,1]$ and is
+  differentiable.
+\end{theorem}
+
+\section{Optimal Auctions}
+
+\begin{theorem}[Revenue Equivalence]
+  Suppose bidders are risk neutral and have iid private
+  values. Then, any two equilibria of any two auctions that generate
+  the same allocation rule and the same conditional
+  expected payoffs for each buyer with value $0$ produce
+  the same expected revenue for the seller.
+\end{theorem}
+
+Myerson (1981) analyzes the first price auction and asks
+which mechanism maximizes the revenue of the seller among
+all feasible mechanism (where feasible means
+implementable in Bayesian Nash equilibrium). As we have
+discussed, we can invoke the revelation principle  to
+focus on the set of direct revelation mechanisms that are
+incentive compatible and individually rational. A direct
+revelation mechanism in this context is a pair of outcome
+functions $(p,x)$ such that $p:\Theta\to \R^n$ produces a
+vector where $p_i$ is the probability agent $i$ gets the
+item and $x:\Theta\to\R^n$ represents the bids of the
+agents. The expected utility of a bidder with
+$\theta_i\in[a_i,b_i]$ is
+\begin{equation}
+  \label{eq:2}
+  U_i(p,x,\theta_i) = \int_{\Theta_{-i}}
+  (p_i(\theta)\theta_i - x_i(\theta))f_{-i}(\theta_{-i})\,d\theta_{-i}
+\end{equation}
+where $\theta$ is the vector of valuations of the $n$
+bidders. Then, assuming the seller values the item at $0$, the expected revenue is
+\begin{equation}
+  \label{eq:3}
+  U_0(p,x) = \int_\Theta \left(\sum_i x_i(\theta)\right)
+  f(\theta)\, d\theta
+\end{equation}
+Clearly not every mechanism is feasible, so we impose the constraints
+\begin{enumerate}
+\item $\sum_i p_i(\theta) = 1$ and $p_i(\theta) \ge 0$
+  for all $i$ and $\theta$, i.e. the allocation rule is a
+  valid probability distribution.
+\item (IR) $U_i(p,x,\theta_i) \ge 0$ for every agent and
+  valuation $\theta_i$, i.e. participation leaves you at
+  least as well off
+\item (IC) $U_i(p,x,\theta_i) \ge \int_{\Theta_{-i}}
+  (p_i(s_i,\theta_{-i}) \theta_i - x_i(s_i,\theta_{-i}))
+  f_{-i}(\theta_{-i})\,d\theta_{-i}$, i.e. the agent does
+  not want to misreport his valuation as $s_i$.
+\end{enumerate}
+
+Feasibility turns out to be equivalent to the following
+conditions:
+\begin{lemma}[Lemma 2 of Myerson 1981]
+  A mechanism $(p,x)$ is feasible if and only if
+  \begin{enumerate}
+  \item The allocation probability from report $s_i$,
+    denoted $Q_i(p,s_i) = \int_{\Theta_{-i}}
+    p_i(s_i,\theta_{-i})
+    f_{-i}(\theta_{-i})\,d\theta_{-i}$, is non-decreasing (ND)
+      in the report.
+    \item $U_i(p,x,\theta_i) = U_i(p,x,a_i) +
+      \int_{a_i}^{\theta_i} Q_i(p,s_i) \, ds_i$ for every
+      agent and every $s_i,\theta_i \in [a_i,b_i]$.
+    \item $U_i(p,x,a_i) \ge 0$ for every agent.
+    \item  $\sum_i p_i(\theta) = 1$ and $p_i(\theta) \ge 0$
+  for all $i$ and $\theta$
+  \end{enumerate}
+
+\end{lemma}
+
+Given this characterization, we have the following
+theorem
+\begin{theorem}
+  An auction (p,x) that maximizes
+  \begin{equation}
+    \label{eq:4}
+    \int_\Theta \left( \sum_i\left(\theta_i -
+        \frac{1-F_i(\theta_i)}{f_i(\theta_i)}\right)p_i(\theta)\right) f(\theta)\,d\theta
+  \end{equation}
+  subject to the IC constraint and the non-decreasing
+  constraint is the optimal auction if
+  \begin{equation}
+ x_i(t) = p_i(\theta)\theta_i - \int_{a_i}^{\theta_i} p_i(s_i,\theta_{-i})\,ds_i\label{eq:6}
+ \end{equation}
+\end{theorem}
+In a typical application, you rewrite the objective
+fucntion so it takes the form of the previous theorem and
+maximize is subject to the IR constraint only. You'll
+often end up wiht a solution that satisfies the ND
+constraint iff $\theta_i -
+\frac{1-F_i(\theta_i)}{f_i(\theta_i)}$ is non-decreasing.
+
+%%%%%%%%%%%%%%%
+\end{spacing}
+\end{document}
+%%%%% FIN %%%%%
+%%%%%%%%%%%%%%%

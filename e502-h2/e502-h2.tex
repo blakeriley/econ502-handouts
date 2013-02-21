@@ -1,0 +1,253 @@
+\documentclass[letter, 10pt]{article}
+% Change "article" to "report" to get rid of page number on title page
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{setspace}
+\usepackage{graphicx,float,wrapfig}
+%\usepackage{parskip}
+\usepackage{enumerate}
+
+% In case you need to adjust margins:
+\topmargin=-0.45in      %
+\evensidemargin=0in     %
+\oddsidemargin=0in      %
+\textwidth=6.5in        %
+\textheight=9.0in       %
+\headsep=0.25in         %
+%\parindent=0in
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Format related commands
+
+
+% Includes a figure
+% The first parameter is the label, which is also the name of the figure
+%   with or without the extension (e.g., .eps, .fig, .png, .gif, etc.)
+%   IF NO EXTENSION IS GIVEN, LaTeX will look for the most appropriate one.
+%   This means that if a DVI (or PS) is being produced, it will look for
+%   an eps. If a PDF is being produced, it will look for nearly anything
+%   else (gif, jpg, png, et cetera). Because of this, when I generate figures
+%   I typically generate an eps and a png to allow me the most flexibility
+%   when rendering my document.
+% The second parameter is the width of the figure normalized to column width
+%   (e.g. 0.5 for half a column, 0.75 for 75% of the column)
+% The third parameter is the caption.
+\newcommand{\scalefig}[3]{
+  \begin{figure}[ht!]
+    % Requires \usepackage{graphicx}
+    \centering
+    \includegraphics[width=#2\columnwidth]{#1}
+    %%% I think \captionwidth (see above) can go away as long as
+    %%% \centering is above
+    %\captionwidth{#2\columnwidth}%
+    \caption{#3}
+    \label{#1}
+  \end{figure}}
+
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Custom commands
+
+\newcommand{\twopartdef}[4]
+{
+	\left\{
+		\begin{array}{ll}
+			#1 & \mbox{if } #2 \\
+			#3 & \mbox{if } #4
+		\end{array}
+	\right.
+}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\operatorname{E}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% The main document content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\begin{spacing}{1.1}
+
+\noindent
+\textbf{Handout 2} \\
+Econ 502 \\
+February 1, 2012 \\
+TA: Blake Riley \\
+
+\begin{center}
+{\Large Microeconomic Theory I: Spring 2013}
+\end{center}
+
+\section{Refinements and Dynamic Games}
+
+\subsection{Trembling-hand perfection}
+
+\begin{definition}
+  A Nash equilibrium $\sigma$ of a normal form game is
+  \textbf{trembling-hand perfect} iff there is some sequence of totally
+  mixed strategies $\{\sigma^k\}_{k=1}^\infty$ such that $\forall i,k$,
+  $\lim \sigma^k = \sigma$ and $\sigma_i$ is a best response to every
+  element of $\sigma_{-i}^k$.
+\end{definition}
+
+\begin{lemma}
+  If $\sigma$ is a normal form trembling- hand perfect Nash equlibrium, then
+  $\sigma_i$ is not a weakly dominated strategy for any $i$. Hence, no weakly
+  dominated pure strategy is played with positive probability.
+\end{lemma}
+
+\begin{theorem}
+  Every game with finite strategy sets in normal form has a trembling-hand
+  perfect Nash equilibrium.
+\end{theorem}
+
+\subsection{Subgame perfect Nash equilibria}
+
+\begin{definition}
+  A \textbf{subgame} of an extensive form game is a subset of the
+  game having the following properties:
+  \begin{itemize}
+  \item It begins with an information set containing a
+    single node (since games start from a single node).
+  \item It contains all the nodes that are successors of
+    this node and only these nodes.
+  \item If a node is in the subgame, then all nodes in
+    the same information set are in the subgame (we can't
+    cut through information sets).
+  \end{itemize}
+\end{definition}
+
+\begin{definition}
+  A strategy profile $\sigma = (\sigma_1, \ldots, \sigma_N)$ in an
+  extensive form game is a \textbf{subgame perfect Nash equilibrium (SPNE)}
+  of this game if it induces a Nash equilibrium in every subgame of the
+  game.
+\end{definition}
+
+Every SPNE is a NE, but not vice versa (which is why it's known as a
+refinement). If the only subgame of an extensive form game is the game
+itself, then every NE is a SPNE.
+
+\subsection{Identifying SPNEs}
+
+Backward induction:
+
+\begin{enumerate}
+\item Identify how many subgames you have. If the only subgame is the game
+  itself, every NE is an SPNE. In simple cases, drawing the normal form and
+  finding NE is the best route. If this is applicable, stop here.
+\item Go to the final subgames and find the NE of the final subgames.
+\item Pick one of the equilibria and replace the final subgames by the
+  corresponding equilibrium payoff vectors.
+\item Now start the recursion. Do the previous steps again for the reduced
+  game. If you find multiple equilibria at any step, each of the possible
+  combinations constitutes a SPNE.
+\item If there is a unique equilibrium strategy for each player at each
+  possible subgame, the SPNE is unique.
+\end{enumerate}
+
+\begin{lemma}
+  In a finite extensive form game, if no player has the same payoffs at any
+  two terminal nodes, there is a unique Nash equilibrium that can be
+  derived by backward induction. This is then also the unique SPNE.
+\end{lemma}
+
+\subsection{Weak perfect Bayesian Nash equilibria}
+
+\begin{definition}
+  A profile of strategies and systems of beliefs $(\sigma, \mu)$ is a
+  \textbf{weak perfect Bayesian Nash equilibrium (WPBE)} in an extensive
+  form game if it has the following properties:
+  \begin{itemize}
+  \item The strategy profile $\sigma$ is sequentially rational given given
+    belief system $\mu$, i.e. once an information set is reached on the
+    equilibrium path, no player finds it worthwhile to revise his strategy.
+  \item The systems of beliefs $\mu$ is derived from strategy profile
+    $\sigma$ using Bayes rule whenever possible.
+  \end{itemize}
+\end{definition}
+
+The probability of being at one specific node in an information set that
+lies on the equilibrium path has to be derived by Bayes rule. Notice
+however, we don't put any restrictions on how to derive beliefs for
+information sets not on the equilibrium path.
+
+WPBE are NE, but not vice versa.
+
+\subsection{How to identify WPBEs}
+
+\begin{enumerate}
+\item Check whether each player has some dominant strategies. This can save
+  a significant amount of time.
+\item Assign general beliefs to each node with non-singleton information
+  sets and apply ``sequential rationality,'' i.e. compute expected payoffs
+  of each possible action at this information set using the general
+  beliefs. Find out which action has the higher expected payoff for which
+  threshold beliefs. You will probably have several cases.
+\item Apply sequential rationality to each singleton information set given
+  the cases of the other information sets.
+\item Update the beliefs that are on the equilibrium paths and ensure
+  consistency with the assumed beliefs from step 2.
+\end{enumerate}
+
+\subsection{Sequential equilibria}
+
+\begin{definition}
+  A profile of strategies and systems of belief $(\sigma, \mu)$ is a
+  \textbf{sequential equilibrium} (denoted elsewhere, perhaps more
+  consistently, as \textbf{perfect Bayesian equilibria}) in an extensive
+  form game if it has the following properties:
+  \begin{itemize}
+  \item The strategy profile $\sigma$ is sequentially rational given belief
+    system $\mu$.
+  \item There exists a sequence of completely mixed strategies
+    $\left\{\sigma^k\right\}_{k=1}^\infty$ with $\lim_{k \to \infty} \sigma^k =
+    \sigma$ such that $\mu = \lim_{k \to \infty} \mu^k$, where $\mu^k$ denotes
+    the beliefs derives from strategy profile $\sigma^k$ using Bayes rule.
+  \end{itemize}
+\end{definition}
+
+Sequential equilibria are WPBE and SPNE.
+
+\subsection{Identifying sequential equilibria}
+
+\begin{enumerate}
+\item First you have to identify all WPBEs. If there is a unique WPBE and
+  all information sets of all players are on the equilibrium path, then it
+  is also a sequential equilibrium.
+\item If not all information sets are reached: try to construct a sequence
+  of mixed strategies that converge to the equilibrium strategies so that
+  the induced beliefs converge to the beliefs given by the WPBE. If you
+  find one such sequence you are done.
+\item To show that something is not a sequential equilibrium can be
+  difficult using the sequence approach. You would have to prove that for
+  every sequence of mixed strategies, the induced beliefs don't converge to
+  the proposed beliefs. A better approach: try to show that it's not a
+  SPNE. If this is the case, then it can't be a sequential equilibrium.
+\end{enumerate}
+
+\subsection{Tips}
+
+\begin{itemize}
+\item Every sequential is a WPBE and a SPNE (so which sets of equilibria
+  are larger)?
+\item Not every WPBE is a SPNE.
+\item If you find a sequence that does not converge to a pair $(\sigma,
+  \mu)$, then you have not shown this is not a sequential equilibrium!
+\item If for a pair $(\sigma, \mu)$ every information set is reached and
+  $(\sigma, \mu)$ is a WPBE, then it is also a sequential equilibrium (and
+  hence also a SPNE).
+\item If you show that $(\sigma, \mu)$ is a WPBE, but not a SPBE, then it
+  is not a sequential equilibrium.
+\end{itemize}
+
+%%%%%%%%%%%%%%%
+\end{spacing}
+\end{document}
+%%%%% FIN %%%%%
+%%%%%%%%%%%%%%%
