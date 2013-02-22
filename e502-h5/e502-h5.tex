@@ -5,6 +5,8 @@
 \usepackage{graphicx,float,wrapfig}
 %\usepackage{parskip}
 \usepackage{enumerate}
+\usepackage{tikz}
+\tikzset{auto}
 
 % In case you need to adjust margins:
 \topmargin=-0.45in      %
@@ -76,7 +78,7 @@ designer.
 \end{definition}
 
 \begin{definition}
-  In a setting with tranfers and $n$ agents, a social choice function
+  In a setting with transfers and $n$ agents, a social choice function
   $f:\Theta \to A\times \R^n$ is a pair $(d(\theta), t(\theta))$, where $d$
   is a decision rule which selects some collective option from $A$ and $t$
   defines a vector of transfers to agents (with negative transfers being
@@ -153,10 +155,10 @@ also true.
   spaces are complete in the sense that each $a \in A$ is selected by $d$
   for some type profile, then the mechanism is in the VCG family.
 \end{theorem}
-Even weakening dominant-strategy IC to Bayesian IC doesn't change the class
-of efficient mechanisms:
+Even weakening dominant-strategy IC to Bayesian IC (which we'll investigate
+later) doesn't change the class of efficient mechanisms:
 \begin{theorem}
-  (Williams 1999) Every efficient and Bayesian incentive compatible
+  (Williams 1999) Every efficient and Bayesian incentive-compatible
   mechanism with transfers gives the same interim payoffs as some Groves
   mechanism, assuming type spaces are connected, open subsets of Euclidean
   space and interim valuations are continuously differentiable.
@@ -235,33 +237,26 @@ mechanisms \footnote{See Ruggerio (2006), ``Optimal decision-making with
   minimal waste'', Guo and Conitzer (2010), ``Optimal-in-expectation
   redistribution mechanisms'', and Ruggerio (2012) ``Fairness and welfare
   through redistribution when utility is transferable'', among others.}
-return some of the transfers back to participants relative to the pivotal
-mechanism while maintaining feasibility.  Clippel et al. (2012), ``Destroy
-to save'' shows that allowing a tiny bit of inefficiency in the allocation
-can substantially reduce the amount of surplus taken from participants,
-improving overall participant welfare.
+return some of the pivotal mechanism transfers back to participants while
+maintaining feasibility. In particular, given pivotal mechanism payments,
+Ruggerio's redistribution mechanism reduces each positive payment by the
+total revenue that would have been collected if the agent reported his
+minimal possible valuation and splits it equally between all agents
+(including himself).  Clippel et al. (2012), ``Destroy to save'' shows that
+allowing a tiny bit of inefficiency in the allocation can substantially
+reduce the amount of surplus taken from participants, improving overall
+participant welfare.
 
 \section{Exercises}
 \label{sec:exercises}
 
 \begin{exercise}
-  (Inspired by Fishburn (1973), ``Summation Social Choice Functions'') Assume
-  agents' utility functions over the choice sets $X_i$ are taken from the
-  set of positive-valued, continuous, strictly concave, and strictly
-  monotone real-valued functions, and agents are heterogeneous. Assume the
-  feasible vectors of choices make up a compact set, denoted by $Y \subset
-  \prod^n X_i$. Define the social choice function as a mapping that
-  maximizes the sum of all individual utilities over the feasible
-  vectors. Setup the SCF and check: Is it well-defined? Is this scf
-  monotone? Does it satisfy NVP?
-\end{exercise}
-
-\begin{exercise}
   Given a set of alternatives $A$ and $n$ players, let $S(\theta) \subset
   \R^n$ be the image of $A$ under players' utility functions, describing
   the profiles of feasible utilities. Given some status-quo alternative
-  $\underline{a}$, suppose $S(\theta) \cap \{s: s_i \ge u_i(\underline{a},
-  \theta_i)\}$ is compact. Define the Nash bargaining correspondence as
+  $\underline{a}$, suppose $S(\theta) \cap \{x: x_i \ge u_i(\underline{a},
+  \theta_i)\}$ is compact and convex. Define the Nash bargaining
+  correspondence as
   \begin{align*}
     f^N(\theta) = \underset{\substack{a \in A:\\ u_i(a, \theta_i) \ge
         u_i(\underline{a}, \theta_i)}}{\operatorname{argmax}}
@@ -270,20 +265,23 @@ improving overall participant welfare.
   \end{align*}
   Is $f^N$ well-defined, monotone, or satisfy NVP?
 
-  Now suppose we reframe the  outcome space is defined as the 
+  Naeve (1999), ``Nash implementation of the Nash bargaining solution using
+  intuitive message spaces'' provides a mechanism that implements the above
+  correspondence. Ponder this.
 \end{exercise}
 
 \begin{exercise}
-  (Dutta and Sen (2009), ``Nash Implementation with Partially Honest
+  (Dutta and Sen (2012), ``Nash Implementation with Partially Honest
   Individuals'') Assume at least one individual in the population is
   partially honest, i.e. the agent lexicographically prefers the honest or
   helpful strategy to deceptive ones. Show NVP is sufficient for Nash
   implementation.
 \end{exercise}
 
+
 \begin{exercise}
-  Describe the VCG family and the pivotal
-  mechanism for the following applications:
+  Describe the VCG family, pivotal mechanism, and redistribution mechanism
+  outcomes for the following applications:
   \begin{enumerate}
   \item Living arrangements: Three grad students, Abel, Baker, and Charlie,
     are renting a three-bedroom apartment together. The rent is \$600 and
@@ -300,19 +298,34 @@ improving overall participant welfare.
     get nothing than any single item. Baker is a vegetarian and values the
     carrot and the PBR at \$4, the carrot at \$1, and the PBR at
     \$2. Charlie is only after the PBR, which he values at \$4.
-  \item Multi-unit auction: $K$ units of an identical good are up for sale
-    and each buyer has a valuation $v_i$ for a single item.
-  \item Multi-unit auction 2: $K$ units of an identical good are up for
-    sale and each buyer has a valuation $v_i^k$ for the $k$-th unit they
-    receive. For instance, if player $i$ receives two units, they have
-    utility $v_i^1+v_i^2$.
   \item Buying a path in a network: Consider a series of roads between
-    towns modeled as a weighted directed graph $G=(V,E)$, where each road
-    $e\in E$ is owned by a local Baron and has a cost $c_e \geq 0$ if the
+    towns modeled as a weighted directed graph $G=(V,\mathcal{E})$, where each road
+    $e\in \mathcal{E}$ is owned by a local Baron and has a cost $c_e \geq 0$ if the
     road is used by the King's Army. Suppose we want to procure a path for
-    soldiers between two towns $s,t \in V$. How should the King's
+    soldiers between two towns $A,F \in V$. How should the King's
     economists compensate the Barons for routing the army through their
     fiefdoms?
+    \begin{center}
+      \begin{tikzpicture}[node distance=5em]
+        \node (a) {$A$};
+        \node (b) [right of=a, above of=a] {$B$};
+        \node (c) [right of=a, below of=a] {$C$};
+        \node (d) [right of=b] {$D$};
+        \node (e) [right of=c] {$E$};
+        \node (f) [right of=d, below of=d] {$F$};
+        \draw[->] (a) to node {3} (b);
+        \draw[->] (a) to node [below left]{2} (c);
+        \draw[->] (b) to node {2} (d);
+        \draw[->] (b) to node {1} (e);
+        \draw[->] (c) to node [below]{3} (e);
+        \draw[->] (c) to node {5} (f);
+        \draw[->] (d) to node {2} (f);
+        \draw[->] (e) to node [below right]{1} (f);
+      \end{tikzpicture}
+    \end{center}
+
+  \item Multi-unit auction: $K$ units of an identical good are up for sale
+    and each buyer has a valuation $v_i$ for a single item.
   \end{enumerate}
 \end{exercise}
 
