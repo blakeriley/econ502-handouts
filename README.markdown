@@ -1,4 +1,6 @@
-Handouts for Econ 502: Microeconomic Theory
+**Handouts for Econ 502: Microeconomic Theory**
+
+Click to download pdfs.
 
 * [Handout 1 (January 25th)](e502-h1/e502-h1.pdf?raw=true): Static games of complete and incomplete info, solution concepts
 * [Handout 2 (February 1st)](e502-h2/e502-h2.pdf?raw=true): Refinements, dynamic games
