@@ -6,6 +6,10 @@
 %\usepackage{parskip}
 \usepackage{enumerate}
 
+\usepackage{fourier}
+\usepackage[T1]{fontenc}
+\usepackage[protrusion=true,expansion=true]{microtype}
+
 % In case you need to adjust margins:
 \topmargin=-0.45in      %
 \evensidemargin=0in     %
@@ -13,58 +17,48 @@
 \textwidth=6.5in        %
 \textheight=9.0in       %
 \headsep=0.25in         %
-%\parindent=0in
+\parindent=0in
 
+\usepackage[nodayofweek]{datetime} \usdate
+% Pdf metadata
+\pdfinfo{  /Author (Blake Riley)
+           /Title (Econ 502 Handout 1)
+           /Keywords ()
+           /ModDate (D:\pdfdate)}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Format related commands
-
-
-% Includes a figure
-% The first parameter is the label, which is also the name of the figure
-%   with or without the extension (e.g., .eps, .fig, .png, .gif, etc.)
-%   IF NO EXTENSION IS GIVEN, LaTeX will look for the most appropriate one.
-%   This means that if a DVI (or PS) is being produced, it will look for
-%   an eps. If a PDF is being produced, it will look for nearly anything
-%   else (gif, jpg, png, et cetera). Because of this, when I generate figures
-%   I typically generate an eps and a png to allow me the most flexibility
-%   when rendering my document.
-% The second parameter is the width of the figure normalized to column width
-%   (e.g. 0.5 for half a column, 0.75 for 75% of the column)
-% The third parameter is the caption.
-\newcommand{\scalefig}[3]{
-  \begin{figure}[ht!]
-    % Requires \usepackage{graphicx}
-    \centering
-    \includegraphics[width=#2\columnwidth]{#1}
-    %%% I think \captionwidth (see above) can go away as long as
-    %%% \centering is above
-    %\captionwidth{#2\columnwidth}%
-    \caption{#3}
-    \label{#1}
-  \end{figure}}
-
+\newtheoremstyle{basic}% name
+   {5pt}% Space above
+   {5pt}% Space below
+   {\itshape \leftskip=1em}% Body font
+   {-1em}% Indent amount
+   {\bfseries}% Theorem head font
+   {:}% Punctuation after theorem head
+   { }% Space after theorem head
+   {}% Theorem head spec (can be left empty, meaning `normal')
+\theoremstyle{basic}         
 \newtheorem{exercise}{Exercise}[section]
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Custom commands
 
-\newcommand{\twopartdef}[4]
-{
-	\left\{
-		\begin{array}{ll}
-			#1 & \mbox{if } #2 \\
-			#3 & \mbox{if } #4
-		\end{array}
-	\right.
-}
-
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
 \newcommand{\E}{\operatorname{E}}
+\renewcommand{\P}{\operatorname{Pr}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\cond}{\,|\,}
+\newcommand{\bigcond}{\;\big|\;}
+\newcommand{\argmax}{\mathop{\operatorname{arg\,max}}}
+\newcommand{\noti}{{{\scriptscriptstyle-}\!i}}
+\newcommand{\notj}{{{\scriptscriptstyle-}\!j}}
+\newcommand{\notij}{{{\scriptscriptstyle-}\!\{i,j\}}}
+\newcommand{\I}{\mathbb{I}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% The main document content
@@ -76,7 +70,7 @@
 \noindent
 \textbf{Handout 1} \\
 Econ 502 \\
-January 25, 2013 \\
+January 31, 2014 \\
 TA: Blake Riley \\
 
 \begin{center}
@@ -85,15 +79,14 @@ TA: Blake Riley \\
 
 \section{Static games of complete information}
 
-\begin{definition}
-  Complete information: Each player's payoff function is
-  commonly known among all the players.
+\begin{definition}[Complete information]
+  Each player's payoff function is commonly known among all the players.
 \end{definition}
 
 \subsection{Elements of a static game of complete
   information}
 
-\begin{definition}
+\begin{definition}[Normal form game]
   A game with $N$ players in \textbf{normal form
     representation} $\Gamma_N$ is a collection of players
     $N$, strategy sets $S_i$ and payoff functions
@@ -107,37 +100,37 @@ does not necessarily imply that the parties act simultaneously.
 
 \subsection{Strategies}
 
-Strategies contain all possible decisions relevant to a player's
-actions. Imagine strategies as a book of instructions detailed enough for
-someone else to play as your proxy without needing additional
-information. This will be more important to remember when we consider
-dynamic games.
+Strategies are complete plans of action, containing all possible decisions
+relevant to a player's actions. Imagine strategies as a book of
+instructions detailed enough for someone else to play as your proxy without
+needing additional information. This will be more important to remember
+when we consider dynamic and Bayesian games.
 
-\begin{definition}
-  (Domination) Given two strategies $s_i, s'_i \in S_i$ in the
+\begin{definition}[Domination]
+  Given two strategies $s_i, s'_i \in S_i$ in the
   normal form game $\Gamma_N$, we say $s_i$ \textbf{strictly dominates}
-  $s'_i$ if $\forall s_{-i} \in S_{-i} = \prod_{j\neq i} S_j$, player $i$ has
-  $u_i(s_i,s_{=i}) > u_i(s'_i, s_{-i})$. The strategy $s_i$ \textbf{weakly
-    dominates} $s'_i$ if $\forall s_{-i} \in S_{-i}$,
-  player $i$ has $u_i(s_i,s_{=i}) \ge u_i(s'_i, s_{-i})$ and $\exists
-  s^*_{-i} \in S_{-i}$ such that $u_i(s_i, s^*_{-i}) > u_u(s'_i,
-  s^*_{-i})$. The strategy $s_i$ \textbf{very weakly
-    dominates} $s'_i$ if $\forall s_{-i} \in S_{-i}$,
-  player $i$ has $u_i(s_i,s_{=i}) \ge u_i(s'_i, s_{-i})$.
+  $s'_i$ if $\forall s_\noti \in S_\noti = \prod_{j\neq i} S_j$, player $i$ has
+  $u_i(s_i,s_\noti) > u_i(s'_i, s_\noti)$. The strategy $s_i$ \textbf{weakly
+    dominates} $s'_i$ if $\forall s_\noti \in S_\noti$,
+  player $i$ has $u_i(s_i,s_\noti) \ge u_i(s'_i, s_\noti)$ and $\exists
+  s^*_\noti \in S_\noti$ such that $u_i(s_i, s^*_\noti) > u_u(s'_i,
+  s^*_\noti)$. The strategy $s_i$ \textbf{very weakly
+    dominates} $s'_i$ if $\forall s_\noti \in S_\noti$,
+  player $i$ has $u_i(s_i,s_\noti) \ge u_i(s'_i, s_\noti)$.
 \end{definition}
 
-\begin{definition}
-  (Dominant strategies) A strategy $s_i \in S_i$ is \textbf{strictly
-    (weakly, very weakly)
-    dominant} if $s_i$ strictly (weakly, very weakly) dominates all other strategies in $S_i$.
+\begin{definition}[Dominant strategies]
+  A strategy $s_i \in S_i$ is \textbf{strictly (weakly, very weakly)
+    dominant} if $s_i$ strictly (weakly, very weakly) dominates all other
+  strategies in $S_i$.
 \end{definition}
 
 Notice each player can only have a single strictly or weakly dominant
 strategy by these definitions, but might have many very weakly dominant
 strategies. Some other sources will refer to very weak dominance as weak dominance.
 
-\begin{definition}
-  (Mixed strategies) Given player $i$'s finite pure
+\begin{definition}[Mixed strategy]
+  Given player $i$'s finite pure
   strategy set $S_i$, a \textbf{mixed strategy} for player $i$ is
   a function $\sigma_i : S_i \to [0,1]$ which assigns
   each pure strategy a probability that it will be
@@ -151,14 +144,15 @@ simplex over set $S$. Pure strategies can now be considered as degenerate
 mixed strategies. The notions of dominance carry over to mixed
 strategies.
 
+\hspace{1em}
 By iteratively removing dominated strategies, we end up with a refined set
 of strategies that can plausibly be chosen by each player. This refined set
 is our first example of a solution concept.
 
-\begin{theorem}
-  (Facts about iterated removal of strictly dominated strategies) For any
-  game with compact strategy spaces and continuous payoff functions
-  \begin{enumerate}[a)]
+\begin{theorem}[Facts about iterated removal of strictly dominated
+  strategies]
+  For any game with compact strategy spaces and continuous payoff functions
+  \begin{enumerate}[a)]\leftskip = 1em
   \item The set of surviving strategies is compact and
     nonempty (so it's meaningful to talk about).
   \item The order of deletion does not matter.
@@ -185,24 +179,24 @@ will not use weakly dominated strategies.
   strategy that plays $s_i$ with positive probability.
 \end{lemma}
 
-\begin{definition}
-  (Best responses) A strategy $\sigma_i$ is a \textbf{best response} for
+\begin{definition}[Best response]
+  A strategy $\sigma_i$ is a \textbf{best response} for
   player $i$ to his rivals' strategies $\sigma_{-i}$ if $\forall \sigma'_i
   \in \Delta(S_i),\; u_i(\sigma_i, \sigma_{-i}) \geq u_i(\sigma'_i,
   \sigma_{-i})$. Strategy $\sigma_i$ is \textbf{never a best response} if
   there is no $\sigma_{-i}$ for which $\sigma_i$ is a best response.
 \end{definition}
 
-\begin{definition}
-  (Rationalizable strategies) The strategies in $\Delta(S_i)$ that survive
+\begin{definition}[Rationalizable strategies]
+  The strategies in $\Delta(S_i)$ that survive
   the iterated removal of strategies that are never best responses are
   known as \textbf{rationalizable strategies}.
 \end{definition}
 
-\begin{theorem}
-  (Facts about rationalizable strategies) For any game with compact
+\begin{theorem}[Facts about rationalizable strategies]
+  For any game with compact
   strategy spaces and continuous payoff functions
-  \begin{enumerate}[a)]
+  \begin{enumerate}[a)]\leftskip = 1em
   \item The set of rationalizable strategies is compact and
     nonempty (so it's meaningful to talk about).
   \item The order of deletion does not matter.
@@ -212,9 +206,9 @@ will not use weakly dominated strategies.
   \end{enumerate}
 \end{theorem}
 
-\begin{theorem}
-  (Equivalence of iterated strictly undominated strategies and
-  rationalizable strategies) If $N=2$, the set of iterated strictly
+\begin{theorem}[Equivalence of iterated strictly undominated strategies and
+  rationalizable strategies]
+  If $N=2$, the set of iterated strictly
   undominated strategies is exactly the set of rationalizable
   strategies. Some iteratively strictly undominated strategies may not be
   rationalizable if $N>2$. Some rationalizable strategies may not survive
@@ -237,8 +231,8 @@ strictly dominated strategies in general.
   In the first- and second-price bid auctions, all bids are rationalizable.
 \end{theorem}
 
-\begin{definition}
-  (Nash equilibrium) A mixed strategy profile $\sigma = \left(\sigma_1,
+\begin{definition}[Nash equilibrium]
+  A mixed strategy profile $\sigma = \left(\sigma_1,
     \ldots, \sigma_N\right)$ is a \textbf{Nash equilibrium} of a game
   if \[\forall i \in N,\; \forall \sigma'_i\in \Delta(S_i),\;\;
   u_i(\sigma_i, \sigma_{-i}) \geq u_i(\sigma'_i, \sigma_{-i}),\] i.e.~if
@@ -256,7 +250,7 @@ strictly dominated strategies in general.
 \begin{theorem}
   Given a game $\Gamma = \left\{N, \{X_i, u_i\}_{i=1}^N\right\}$ in normal
   form such that
-  \begin{enumerate}[a)]
+  \begin{enumerate}[a)]\leftskip = 1em
   \item $X_i$ is a nonempty, compact, and convex subset of a finite
     dimensional Euclidean space for every $i$ and
   \item $u_i : \prod_{j=1}^N X_j \to \R$ is quasiconcave and continuous,
@@ -266,8 +260,8 @@ strictly dominated strategies in general.
   x_i\in X_i$, $ u_i(x_i^*, x_{-i}^*) \geq u_i(x_i, x_{-i}^*)$.
 \end{theorem}
 
-\begin{theorem}
-  (Glicksburg's theorem) Given a game where the strategy spaces are
+\begin{theorem}[Glicksburg's theorem]
+  Given a game where the strategy spaces are
   non-empty, compact subsets of a complete metric space and payoff
   functions are continuous, there exists a mixed-strategy Nash equilibrium.
 \end{theorem}
@@ -295,12 +289,12 @@ Bayesian games.
 As long as the type spaces are sufficiently descriptive (including possibly
 infinite hierarchies of beliefs), the common knowledge assumption is
 without loss of generality. In this context, a strategy for agent $i$ is a
-function $s_i(\theta_i)$ that assigns a strategy for each realization of
-the random variable $\theta_i$. Denote the set of all such functions as
-$Z_i$.
+function $s_i(\theta_i)$ that assigns a plan of action for each realization
+of the random variable $\theta_i$. This is a common point of confusion!
+Denote the set of all such functions as $Z_i$.
 
 \begin{definition}
-  A profile of decision rules $(s_1(\cdot), \ldots, s_N(\cdot))$ is a
+  A profile of strategies $(s_1(\cdot), \ldots, s_N(\cdot))$ is a
   \textbf{Bayesian Nash Equilibrium} of a Bayesian game if $\forall i \in N$, $\forall s'_i \in Z_i$, and $\forall \theta_i
   \in \Theta_i$ occurring with positive
   probability \[\E_{\theta_{-i}}\left[u_i(s_i(\theta_i), s_{-i}(\theta_{-i}),
