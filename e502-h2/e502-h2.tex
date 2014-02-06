@@ -1,10 +1,14 @@
-\documentclass[letter, 10pt]{article}
+\documentclass[letter, 11pt]{article}
 % Change "article" to "report" to get rid of page number on title page
 \usepackage{amsmath,amsfonts,amsthm,amssymb}
 \usepackage{setspace}
 \usepackage{graphicx,float,wrapfig}
 %\usepackage{parskip}
 \usepackage{enumerate}
+
+\usepackage{fourier}
+\usepackage[T1]{fontenc}
+\usepackage[protrusion=true,expansion=true]{microtype}
 
 % In case you need to adjust margins:
 \topmargin=-0.45in      %
@@ -13,74 +17,64 @@
 \textwidth=6.5in        %
 \textheight=9.0in       %
 \headsep=0.25in         %
-%\parindent=0in
+\parindent=0in
 
+\usepackage[nodayofweek]{datetime} \usdate
+% Pdf metadata
+\pdfinfo{  /Author (Blake Riley)
+           /Title (Econ 502 Handout 2)
+           /Keywords ()
+           /ModDate (D:\pdfdate)}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Format related commands
-
-
-% Includes a figure
-% The first parameter is the label, which is also the name of the figure
-%   with or without the extension (e.g., .eps, .fig, .png, .gif, etc.)
-%   IF NO EXTENSION IS GIVEN, LaTeX will look for the most appropriate one.
-%   This means that if a DVI (or PS) is being produced, it will look for
-%   an eps. If a PDF is being produced, it will look for nearly anything
-%   else (gif, jpg, png, et cetera). Because of this, when I generate figures
-%   I typically generate an eps and a png to allow me the most flexibility
-%   when rendering my document.
-% The second parameter is the width of the figure normalized to column width
-%   (e.g. 0.5 for half a column, 0.75 for 75% of the column)
-% The third parameter is the caption.
-\newcommand{\scalefig}[3]{
-  \begin{figure}[ht!]
-    % Requires \usepackage{graphicx}
-    \centering
-    \includegraphics[width=#2\columnwidth]{#1}
-    %%% I think \captionwidth (see above) can go away as long as
-    %%% \centering is above
-    %\captionwidth{#2\columnwidth}%
-    \caption{#3}
-    \label{#1}
-  \end{figure}}
-
+\newtheoremstyle{basic}% name
+   {5pt}% Space above
+   {5pt}% Space below
+   {\itshape \leftskip=1em}% Body font
+   {-1em}% Indent amount
+   {\bfseries}% Theorem head font
+   {:}% Punctuation after theorem head
+   { }% Space after theorem head
+   {}% Theorem head spec (can be left empty, meaning `normal')
+\theoremstyle{basic}
 \newtheorem{exercise}{Exercise}[section]
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Custom commands
 
-\newcommand{\twopartdef}[4]
-{
-	\left\{
-		\begin{array}{ll}
-			#1 & \mbox{if } #2 \\
-			#3 & \mbox{if } #4
-		\end{array}
-	\right.
-}
-
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
 \newcommand{\E}{\operatorname{E}}
+\renewcommand{\P}{\operatorname{Pr}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\cond}{\,|\,}
+\newcommand{\bigcond}{\;\big|\;}
+\newcommand{\argmax}{\mathop{\operatorname{arg\,max}}}
+\newcommand{\noti}{{{\scriptscriptstyle-}\!i}}
+\newcommand{\notj}{{{\scriptscriptstyle-}\!j}}
+\newcommand{\notij}{{{\scriptscriptstyle-}\!\{i,j\}}}
+\newcommand{\I}{\mathbb{I}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% The main document content
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-\begin{spacing}{1.1}
+\begin{spacing}{1.0}
 
 \noindent
 \textbf{Handout 2} \\
 Econ 502 \\
-February 1, 2012 \\
+February 6, 2012 \\
 TA: Blake Riley \\
 
 \begin{center}
-{\Large Microeconomic Theory I: Spring 2013}
+{\Large Microeconomic Theory I: Spring 2014}
 \end{center}
 
 \section{Refinements and Dynamic Games}
