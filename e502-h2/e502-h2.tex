@@ -77,28 +77,7 @@ TA: Blake Riley \\
 {\Large Microeconomic Theory I: Spring 2014}
 \end{center}
 
-\section{Refinements and Dynamic Games}
-
-\subsection{Trembling-hand perfection}
-
-\begin{definition}
-  A Nash equilibrium $\sigma$ of a normal form game is
-  \textbf{trembling-hand perfect} iff there is some sequence of totally
-  mixed strategies $\{\sigma^k\}_{k=1}^\infty$ such that $\forall i,k$,
-  $\lim \sigma^k = \sigma$ and $\sigma_i$ is a best response to every
-  element of $\sigma_{-i}^k$.
-\end{definition}
-
-\begin{lemma}
-  If $\sigma$ is a normal form trembling- hand perfect Nash equlibrium, then
-  $\sigma_i$ is not a weakly dominated strategy for any $i$. Hence, no weakly
-  dominated pure strategy is played with positive probability.
-\end{lemma}
-
-\begin{theorem}
-  Every game with finite strategy sets in normal form has a trembling-hand
-  perfect Nash equilibrium.
-\end{theorem}
+\section{Refinements in dynamic games}
 
 \subsection{Subgame perfect Nash equilibria}
 
@@ -169,9 +148,7 @@ Backward induction:
 The probability of being at one specific node in an information set that
 lies on the equilibrium path has to be derived by Bayes rule. Notice
 however, we don't put any restrictions on how to derive beliefs for
-information sets not on the equilibrium path.
-
-WPBE are NE, but not vice versa.
+information sets not on the equilibrium path. All WPBE are NE, but not vice versa.
 
 \subsection{How to identify WPBEs}
 
@@ -228,11 +205,10 @@ Sequential equilibria are WPBE and SPNE.
 \subsection{Tips}
 
 \begin{itemize}
-\item Every sequential is a WPBE and a SPNE (so which sets of equilibria
-  are larger)?
+\item Every sequential equilibrium is a WPBE and a SPNE.
 \item Not every WPBE is a SPNE.
-\item If you find a sequence that does not converge to a pair $(\sigma,
-  \mu)$, then you have not shown this is not a sequential equilibrium!
+\item Finding a single sequence that does not converge to a pair $(\sigma,
+  \mu)$ is not enough to show this is not a sequential equilibrium!
 \item If for a pair $(\sigma, \mu)$ every information set is reached and
   $(\sigma, \mu)$ is a WPBE, then it is also a sequential equilibrium (and
   hence also a SPNE).
