@@ -6,6 +6,10 @@
 %\usepackage{parskip}
 \usepackage{enumerate}
 
+\usepackage{fourier}
+\usepackage[T1]{fontenc}
+\usepackage[protrusion=true,expansion=true]{microtype}
+
 % In case you need to adjust margins:
 \topmargin=-0.45in      %
 \evensidemargin=0in     %
@@ -13,60 +17,60 @@
 \textwidth=6.5in        %
 \textheight=9.0in       %
 \headsep=0.25in         %
-%\parindent=0in
+\parindent=0in
 
+\usepackage[nodayofweek]{datetime} \usdate
+% Pdf metadata
+\pdfinfo{  /Author (Blake Riley)
+           /Title (Econ 502 Handout 3)
+           /Keywords ()
+           /ModDate (D:\pdfdate)}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Format related commands
-
-
-% Includes a figure
-% The first parameter is the label, which is also the name of the figure
-%   with or without the extension (e.g., .eps, .fig, .png, .gif, etc.)
-%   IF NO EXTENSION IS GIVEN, LaTeX will look for the most appropriate one.
-%   This means that if a DVI (or PS) is being produced, it will look for
-%   an eps. If a PDF is being produced, it will look for nearly anything
-%   else (gif, jpg, png, et cetera). Because of this, when I generate figures
-%   I typically generate an eps and a png to allow me the most flexibility
-%   when rendering my document.
-% The second parameter is the width of the figure normalized to column width
-%   (e.g. 0.5 for half a column, 0.75 for 75% of the column)
-% The third parameter is the caption.
-\newcommand{\scalefig}[3]{
-  \begin{figure}[ht!]
-    % Requires \usepackage{graphicx}
-    \centering
-    \includegraphics[width=#2\columnwidth]{#1}
-    %%% I think \captionwidth (see above) can go away as long as
-    %%% \centering is above
-    %\captionwidth{#2\columnwidth}%
-    \caption{#3}
-    \label{#1}
-  \end{figure}}
-
+\newtheoremstyle{basic}% name
+   {5pt}% Space above
+   {5pt}% Space below
+   {\itshape \leftskip=1em}% Body font
+   {-1em}% Indent amount
+   {\bfseries}% Theorem head font
+   {:}% Punctuation after theorem head
+   { }% Space after theorem head
+   {}% Theorem head spec (can be left empty, meaning `normal')
+\theoremstyle{basic}
 \newtheorem{exercise}{Exercise}[section]
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Custom commands
 
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
 \newcommand{\E}{\operatorname{E}}
+\renewcommand{\P}{\operatorname{Pr}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\cond}{\,|\,}
+\newcommand{\bigcond}{\;\big|\;}
+\newcommand{\argmax}{\mathop{\operatorname{arg\,max}}}
+\newcommand{\noti}{{{\scriptscriptstyle-}\!i}}
+\newcommand{\notj}{{{\scriptscriptstyle-}\!j}}
+\newcommand{\notij}{{{\scriptscriptstyle-}\!\{i,j\}}}
+\newcommand{\I}{\mathbb{I}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% The main document content
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-\begin{spacing}{1.1}
+\begin{spacing}{1.0}
 
 \noindent
 \textbf{Handout 3} \\
 Econ 502 \\
-February 7, 2012 \\
+February 14, 2014 \\
 TA: Blake Riley \\
 
 \section{Finitely repeated games}
@@ -95,11 +99,10 @@ simultaneously. The game $G$ will then be called the
   played at every stage.
 \end{theorem}
 
-We have seen that if there are multiple equilibria at every
+If there are multiple equilibria at every
 stage, then there might be subgame-perfect NEs that do
 not involve playing ``stage-game equilibrium
-strategies''. Remember the example from last class where
-this occurred with the two-stage game.
+strategies''.
 
 \section{Infinitely repeated games}
 
@@ -107,7 +110,7 @@ In finitely repeated games, there might be credible threats that influence
 current behavior if the stage game has multiple equilibria. A stronger
 result can be stated for the infinitely repeated case: even if the stage
 game has a unique NE, there might be subgame-perfect NEs of the infinitely
-repeated game in which no choice of actions in any stage is a NE of $G$.
+repeated game in which no choice of actions at any stage is a NE of $G$.
 
 \begin{definition}
   Given a stage game $G$, let $G(\infty, \delta)$ denote
@@ -131,25 +134,60 @@ repeated game in which no choice of actions in any stage is a NE of $G$.
  $1-\delta$ so we get rid of this factor when stage game
  payoffs are identical across all periods.
 
+ The discount factor $\delta$ can often be interpreted as either a
+time-discount factor or a fixed probability that the game ends at that stage.
+
+
 \subsection{Folk theorems}
+
+A ``folk theorem'' is a name for any theorem that is generally known, but
+not necessesarily attributable to any individual. In the context of
+repeated games, ``the folk theorem'' is a general feasibility theorem that
+says a very large range of payoffs are acheivable in a Nash equilibrium of
+an infinitely repeated game. Many further extensions exist for folk
+theorems when agents have incomplete information and actions are only
+partially observable.
 
 \begin{definition}
   In an $n$-player game, call the vector $(x_1,\ldots,
-  x_n)$ a \textit{feasible vector} in stage game $G$ if each $x_i$
+  x_n)$ a \emph{feasible vector} in stage game $G$ if each $x_i$
   is a convex combination of the pure-strategy payoffs of $G$.
 \end{definition}
+
+\begin{definition}
+  A payoff vector $(x_1, \ldots, x_n)$ is \emph{enforceable} if, for all $i$, the
+  payoff $x_i$ is at least the minimum payoff other players can force on $i$:
+  \begin{align*}
+    x_i \ge m_i = \min_{s_\noti} \max_{s_i} \pi_i(s_i, s_\noti)
+  \end{align*}
+\end{definition}
+
+\begin{theorem}
+  (``The Folk Theorem'') Let $G$ be a finite, static game of complete
+  information with $n$ players, and let $(x_1, \ldots, x_n)$ be a feasible
+  and enforceable payoff vector. Then there exists a Nash equilibrium of
+  $G(\infty, \delta)$ that acheives $x$ as payoffs if $\delta$ is
+  sufficiently close to one.
+\end{theorem}
 
 \begin{theorem}
   (Friedman 1971) Let $G$ be a finite, static game of
   complete information with $n$ players. Let $(e_1,
   \ldots, e_n)$ be the payoffs from a Nash equilibrium of
   $G$, and let $(x_1, \ldots, x_n)$ be any other feasible
-  payoffs from $G$, If $x_1 > e_i$ for each player $i$
+  payoffs from $G$. If $x_1 > e_i$ for each player $i$
   and $\delta$ is sufficiently close to one, then there
   exists a subgame-perfect Nash equilibrium of the
   infinitely repeated game $G(\infty, \delta)$ that
   achieves $(x_1, \ldots, x_n)$ as payoffs.
 \end{theorem}
+
+\begin{theorem}
+  (Aumann and Shapley 1976, Rubinstein 1979) Even without discounting,
+  every feasible and enforceable vector of payoffs is acheivable in a
+  subgame perfect Nash equilibrium.
+\end{theorem}
+
 
 
 %%%%%%%%%%%%%%%
