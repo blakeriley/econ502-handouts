@@ -6,6 +6,10 @@
 %\usepackage{parskip}
 \usepackage{enumerate}
 
+\usepackage{fourier}
+\usepackage[T1]{fontenc}
+\usepackage[protrusion=true,expansion=true]{microtype}
+
 % In case you need to adjust margins:
 \topmargin=-0.45in      %
 \evensidemargin=0in     %
@@ -13,72 +17,60 @@
 \textwidth=6.5in        %
 \textheight=9.0in       %
 \headsep=0.25in         %
-%\parindent=0in
+\parindent=0in
 
+\usepackage[nodayofweek]{datetime} \usdate
+% Pdf metadata
+\pdfinfo{  /Author (Blake Riley)
+           /Title (Econ 502 Handout 4)
+           /Keywords ()
+           /ModDate (D:\pdfdate)}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Format related commands
-
-
-% Includes a figure
-% The first parameter is the label, which is also the name of the figure
-%   with or without the extension (e.g., .eps, .fig, .png, .gif, etc.)
-%   IF NO EXTENSION IS GIVEN, LaTeX will look for the most appropriate one.
-%   This means that if a DVI (or PS) is being produced, it will look for
-%   an eps. If a PDF is being produced, it will look for nearly anything
-%   else (gif, jpg, png, et cetera). Because of this, when I generate figures
-%   I typically generate an eps and a png to allow me the most flexibility
-%   when rendering my document.
-% The second parameter is the width of the figure normalized to column width
-%   (e.g. 0.5 for half a column, 0.75 for 75% of the column)
-% The third parameter is the caption.
-\newcommand{\scalefig}[3]{
-  \begin{figure}[ht!]
-    % Requires \usepackage{graphicx}
-    \centering
-    \includegraphics[width=#2\columnwidth]{#1}
-    %%% I think \captionwidth (see above) can go away as long as
-    %%% \centering is above
-    %\captionwidth{#2\columnwidth}%
-    \caption{#3}
-    \label{#1}
-  \end{figure}}
-
-
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{lemma}[theorem]{Lemma}
-\theoremstyle{definition}
+\newtheoremstyle{basic}% name
+   {5pt}% Space above
+   {5pt}% Space below
+   {\itshape \leftskip=1em}% Body font
+   {-1em}% Indent amount
+   {\bfseries}% Theorem head font
+   {:}% Punctuation after theorem head
+   { }% Space after theorem head
+   {}% Theorem head spec (can be left empty, meaning `normal')
+\theoremstyle{basic}
 \newtheorem{exercise}{Exercise}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Custom commands
 
-\newcommand{\twopartdef}[4]
-{
-	\left\{
-		\begin{array}{ll}
-			#1 & \mbox{if } #2 \\
-			#3 & \mbox{if } #4
-		\end{array}
-	\right.
-}
-
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
 \newcommand{\E}{\operatorname{E}}
+\renewcommand{\P}{\operatorname{Pr}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\cond}{\,|\,}
+\newcommand{\bigcond}{\;\big|\;}
+\newcommand{\argmax}{\mathop{\operatorname{arg\,max}}}
+\newcommand{\noti}{{{\scriptscriptstyle-}\!i}}
+\newcommand{\notj}{{{\scriptscriptstyle-}\!j}}
+\newcommand{\notij}{{{\scriptscriptstyle-}\!\{i,j\}}}
+\newcommand{\I}{\mathbb{I}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% The main document content
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-\begin{spacing}{1.1}
+\begin{spacing}{1.0}
 
 \noindent
 \textbf{Handout 4} \\
 Econ 502 \\
-February 15, 2013 \\
+February 20, 2014 \\
 TA: Blake Riley \\
 
 \section{Social Choice Theory}
@@ -231,6 +223,7 @@ assuming these were observable. Gibbard-Satterthwaite points us toward the
 direction of imperfectly observable preferences that must be revealed by
 the individuals before they can be aggregated.
 
+\hspace{1em}
 We again consider a set of agents $n$ which will make a collective choice
 form a set of alternatives $X$. Utility functions $u_i(x, \theta_i)$ are
 commonly known, but are determined by a pivately known random variable
@@ -306,8 +299,14 @@ outcomes of all equilibria coincide with the scf, then the scf is
 \textit{fully} implemented.  Figure \ref{reiterdiagram} depicts the generic
 implementation problem.
 
-\scalefig{reiterdiagram}{.45}{Reiter diagram of a
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width=.45\columnwidth]{reiterdiagram}
+    \caption{Reiter diagram of a
   mechanism $\xi$ implementing $f$}
+\label{reiterdiagram}
+\end{figure}
 
 Due to the revelation principle, we can usually think of
 the message space as the type space, and most mechanisms
@@ -351,6 +350,7 @@ for all realization of types. If this was the case, then we would have a
 very robust way of implementing the scf, since we can be confident about
 what agents will want to do, regardless of what other agents do or what their types are.
 
+\hspace{1em}
 Incentive compatibility in this context is also a simple
 extension.
 \begin{definition}\label{IC}
@@ -398,7 +398,6 @@ which leads to the following definition:
   \item If $(s_1, \ldots, s_I)$ is a Nash equilibrium,
     then $g(s) \in f(\succeq)$.
   \end{enumerate}
-
 \end{definition}
 
 The first part extends our implementation to
@@ -418,8 +417,8 @@ true. We'll need another condition:
 \begin{definition}
   A scr $f: R^n \twoheadrightarrow X$ satisfies
   \textbf{no veto power (NVP)} if for all preference
-  profiles $\succeq$ and all $x\in X$, then for all
-  $i$ \[\forall j \neq i, \forall y\in X, \, x \succeq_j
+  profiles $\succeq$ and all $x\in X$, then for all agents
+  $i$ we have \[\forall j \neq i, \forall y\in X, \, x \succeq_j
   y \implies x\in f(\succeq)\]
 \end{definition}
 
@@ -428,6 +427,7 @@ true. We'll need another condition:
   satisfies NVP, then $f$ is Nash-implementable.
 \end{theorem}
 
+\newpage
 \section{Exercises}
 \label{sec:exercises}
 
@@ -466,6 +466,7 @@ true. We'll need another condition:
   ordering $\succ$ on $X$ is single-peaked iff there is a maximum $x^*$ of
   $\succ$ and $x^* < x < y$ or $y < x < x^* \implies x \succ y$.
 
+  \hspace{1em}
   Consider a partnership of $n$ individuals who will invest in a project,
   with the benefits shared in proportion to each partner's investment. The
   project has a fixed cost of $1$. The partners have single-peaked
@@ -476,6 +477,7 @@ true. We'll need another condition:
   that if the sum of ideal investments is less than the cost, everyone must
   invest at least their ideal amount, and vice versa.
 
+  \hspace{1em}
   In addition to strategy-proofness and efficiency, let's consider two
   other desirable properties of social choice functions. First, an scf is
   \emph{anonymous} if $f(\theta)=f(\pi(\theta))$ for all permutations $\pi$
@@ -483,6 +485,7 @@ true. We'll need another condition:
   $f_i(\theta) \succeq_i f_j(\theta)$, i.e. the proportion allocated to $i$
   is preferred by $i$ to all other agents' allocations.
 
+  \hspace{1em}
   Check whether the following are strategy-proof,
   efficient, anonymous, and/or envy-free:
   \begin{enumerate}
