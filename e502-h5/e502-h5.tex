@@ -5,8 +5,13 @@
 \usepackage{graphicx,float,wrapfig}
 %\usepackage{parskip}
 \usepackage{enumerate}
+
 \usepackage{tikz}
 \tikzset{auto}
+
+\usepackage{fourier}
+\usepackage[T1]{fontenc}
+\usepackage[protrusion=true,expansion=true]{microtype}
 
 % In case you need to adjust margins:
 \topmargin=-0.45in      %
@@ -15,19 +20,48 @@
 \textwidth=6.5in        %
 \textheight=9.0in       %
 \headsep=0.25in         %
-%\parindent=0in
+\parindent=0in
 
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{lemma}[theorem]{Lemma}
-\theoremstyle{definition}
+\usepackage[nodayofweek]{datetime} \usdate
+% Pdf metadata
+\pdfinfo{  /Author (Blake Riley)
+           /Title (Econ 502 Handout 5)
+           /Keywords ()
+           /ModDate (D:\pdfdate)}
+
+\newtheoremstyle{basic}% name
+   {5pt}% Space above
+   {5pt}% Space below
+   {\itshape \leftskip=1em}% Body font
+   {-1em}% Indent amount
+   {\bfseries}% Theorem head font
+   {:}% Punctuation after theorem head
+   { }% Space after theorem head
+   {}% Theorem head spec (can be left empty, meaning `normal')
+\theoremstyle{basic}
 \newtheorem{exercise}{Exercise}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % Custom commands
 
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
 \newcommand{\E}{\operatorname{E}}
+\renewcommand{\P}{\operatorname{Pr}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\cond}{\,|\,}
+\newcommand{\bigcond}{\;\big|\;}
+\newcommand{\argmax}{\mathop{\operatorname{arg\,max}}}
+\newcommand{\noti}{{{\scriptscriptstyle-}\!i}}
+\newcommand{\notj}{{{\scriptscriptstyle-}\!j}}
+\newcommand{\notij}{{{\scriptscriptstyle-}\!\{i,j\}}}
+\newcommand{\I}{\mathbb{I}}
 \newcommand{\tto}{\twoheadrightarrow}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -35,12 +69,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-\begin{spacing}{1.1}
+\begin{spacing}{1.0}
 
 \noindent
 \textbf{Handout 5} \\
 Econ 502 \\
-February 22, 2012 \\
+February 28, 2012 \\
 TA: Blake Riley \\
 
 \section{Mechanism Design with Money}
@@ -105,7 +139,7 @@ notion of ex-post individual rationality.
 
 The \textit{ex-post} label refers to these properties holding for all
 possible realizations of types. Alternately, we can consider
-\textit{ex-ante} or \textit{interim} properties that hold in expectation
+\textit{ex-ante} or \textit{ex-interim} properties that hold in expectation
 over all type profiles or in expectation conditional on one agent's type,
 respectively. More on these in later classes.
 
@@ -140,7 +174,7 @@ individualized tax. On an exam, if you are asked to define the family of
 VCG mechanisms for a given problem, you have to adjust this definition and
 find the objective and transfers up to some arbitrary functions.
 
-Notice that with a VCG mechanism, each agent has the social welfare
+\hspace{1em} Notice that with a VCG mechanism, each agent has the social welfare
 criterion as his own objective, plus something that is unchanged by his
 report. The individuals' incentives are now aligned with the group, so
 honest reporting becomes (weakly) dominant. Surprisingly, the converse is
@@ -223,6 +257,7 @@ combinatorial settings. Direct mechanisms are very useful theoretically,
 but communication costs (from transmission, preparation, or
 privacy-violations) break the revelation principle.
 
+\hspace{1em}
 Notice that the efficiency of the VCG applies only to the
 allocation/decision, assuming negative transfers aren't lost from the
 economy. The pivotal mechanism actually turns out to maximize total
@@ -231,6 +266,7 @@ payments are seen as revenue. However, if there isn't someone external to
 absorb the payments, the benefit of efficiency in decisions is partially
 reduced. 
 
+\hspace{1em}
 Every cloud has a silver lining though. Each deficiency with the VCG is a
 new opportunity for budding market designers. For instance, redistribution
 mechanisms \footnote{See Ruggerio (2006), ``Optimal decision-making with
@@ -247,6 +283,7 @@ allowing a tiny bit of inefficiency in the allocation can substantially
 reduce the amount of surplus taken from participants, improving overall
 participant welfare.
 
+\newpage
 \section{Exercises}
 \label{sec:exercises}
 
@@ -265,9 +302,12 @@ participant welfare.
   \end{align*}
   Is $f^N$ well-defined, monotone, or satisfy NVP?
 
-  Naeve (1999), ``Nash implementation of the Nash bargaining solution using
-  intuitive message spaces'' provides a mechanism that implements the above
-  correspondence. Ponder this.
+  \hspace{1em}
+  Naeve (1999), ``Nash implementation of the Nash bargaining
+  solution using intuitive message spaces'' provides a mechanism that
+  implements the above correspondence. Ponder this. See also Haake and
+  Trockel (2010), ``On Maskin monotonicity of solution based social choice
+  rules''.
 \end{exercise}
 
 \begin{exercise}
@@ -277,7 +317,6 @@ participant welfare.
   helpful strategy to deceptive ones. Show NVP is sufficient for Nash
   implementation.
 \end{exercise}
-
 
 \begin{exercise}
   Describe the VCG family, pivotal mechanism, and redistribution mechanism
