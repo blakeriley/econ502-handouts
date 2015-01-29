@@ -22,7 +22,7 @@
 \usepackage[nodayofweek]{datetime} \usdate
 % Pdf metadata
 \pdfinfo{  /Author (Blake Riley)
-           /Title (Econ 502 Handout 1)
+           /Title (Econ 533 Handout 1)
            /Keywords ()
            /ModDate (D:\pdfdate)}
 
@@ -69,19 +69,15 @@
 
 \noindent
 \textbf{Handout 1} \\
-Econ 502 \\
-January 31, 2014 \\
+Econ 533 \\
+January 30, 2015 \\
 TA: Blake Riley \\
 
 \begin{center}
-{\Large Microeconomic Theory I: Spring 2014}
+{\Large Microeconomic Theory II: Spring 2015}
 \end{center}
 
 \section{Static games of complete information}
-
-\begin{definition}[Complete information]
-  Each player's payoff function is commonly known among all the players.
-\end{definition}
 
 \subsection{Elements of a static game of complete
   information}
@@ -92,6 +88,10 @@ TA: Blake Riley \\
     $N$, strategy sets $S_i$ and payoff functions
     $u_i(\cdot)$ where $u_i \,:\, \prod_{j=1}^N S_j \to
     \R$, i.e. $\Gamma_N = \left(N, \{S_i, u_i(\cdot)\}_{i=1}^N\right)$.
+\end{definition}
+
+\begin{definition}[Complete information]
+  Each player's payoff function is commonly known among everyone.
 \end{definition}
 
 The elements $s_i \in S_i$ are called agents $i$'s pure strategies. In a
@@ -151,7 +151,7 @@ is our first example of a solution concept.
 
 \begin{theorem}[Facts about iterated removal of strictly dominated
   strategies]
-  For any game with compact strategy spaces and continuous payoff functions
+  For any game with compact strategy spaces and continuous payoff functions:
   \begin{enumerate}[a)]\leftskip = 1em
   \item The set of surviving strategies is compact and
     nonempty (so it's meaningful to talk about).
@@ -195,7 +195,7 @@ will not use weakly dominated strategies.
 
 \begin{theorem}[Facts about rationalizable strategies]
   For any game with compact
-  strategy spaces and continuous payoff functions
+  strategy spaces and continuous payoff functions:
   \begin{enumerate}[a)]\leftskip = 1em
   \item The set of rationalizable strategies is compact and
     nonempty (so it's meaningful to talk about).
@@ -219,9 +219,9 @@ The non-equivalence of the two concepts when $N>2$ comes from an implicit
 assumption that other players randomize independently when using mixed
 strategies. This is makes sense if we think the players are
 actually using mixed strategies. In other contexts, it might be more
-natural to think of all players using pure strategies and best-responses to
+natural to think of players ``really'' using pure strategies, with best-responses to
 mixed strategies representing best-responses to probabilistic conjectures
-about which pure strategy will be played. In this case, a player could
+about which pure strategy will be played. Under this interpretation, a player could
 plausibly think the strategy choices of other players are correlated. This
 leads to the notion of correlated rationalizability. Correlated
 rationalizability turns out to be equivalent to iterated deletion of
@@ -342,7 +342,7 @@ Denote the set of all such functions as $Z_i$.
 The Leibniz rule for differentiating under the integral sign can be useful while
 deriving FOCs in problems with uncertainty:
 
-\[\frac{d}{d\alpha}\int_{a(\alpha)}^{b(\alpha)} f(x,\alpha)\,dx = \frac{d b(\alpha)}{d \alpha}\,f(b(\alpha),\alpha)-\frac{d a(\alpha)}{d \alpha}\,f(a(\alpha),\alpha)+ \int_{a(\alpha)}^{b(\alpha)}\frac{\partial}{\partial \alpha}\,f(x,\alpha)\,dx\]
+\[\frac{d}{d\theta}\int_{a(\theta)}^{b(\theta)} f(x,\theta)\,dx = \frac{d b(\theta)}{d \theta}\,f(b(\theta),\theta)-\frac{d a(\theta)}{d \theta}\,f(a(\theta),\theta)+ \int_{a(\theta)}^{b(\theta)}\frac{\partial}{\partial \theta}\,f(x,\theta)\,dx\]
 
 %%%%%%%%%%%%%%%
 \end{spacing}
