@@ -5,9 +5,14 @@
 \usepackage{graphicx,float,wrapfig}
 %\usepackage{parskip}
 \usepackage{enumerate}
+\usepackage{url}
+
 \usepackage{tikz}
 \tikzset{auto}
-\usepackage{url}
+
+\usepackage{fourier}
+\usepackage[T1]{fontenc}
+\usepackage[protrusion=true,expansion=true]{microtype}
 
 % In case you need to adjust margins:
 \topmargin=-0.45in      %
@@ -16,19 +21,48 @@
 \textwidth=6.5in        %
 \textheight=9.0in       %
 \headsep=0.25in         %
-%\parindent=0in
+\parindent=0in
 
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{lemma}[theorem]{Lemma}
-\theoremstyle{definition}
+\usepackage[nodayofweek]{datetime} \usdate
+% Pdf metadata
+\pdfinfo{  /Author (Blake Riley)
+           /Title (Econ 502 Handout 5 Answers)
+           /Keywords ()
+           /ModDate (D:\pdfdate)}
+
+\newtheoremstyle{basic}% name
+   {5pt}% Space above
+   {5pt}% Space below
+   {\itshape \leftskip=1em}% Body font
+   {-1em}% Indent amount
+   {\bfseries}% Theorem head font
+   {:}% Punctuation after theorem head
+   { }% Space after theorem head
+   {}% Theorem head spec (can be left empty, meaning `normal')
+\theoremstyle{basic}
 \newtheorem{exercise}{Exercise}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % Custom commands
 
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
 \newcommand{\E}{\operatorname{E}}
+\renewcommand{\P}{\operatorname{Pr}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\cond}{\,|\,}
+\newcommand{\bigcond}{\;\big|\;}
+\newcommand{\argmax}{\mathop{\operatorname{arg\,max}}}
+\newcommand{\noti}{{{\scriptscriptstyle-}\!i}}
+\newcommand{\notj}{{{\scriptscriptstyle-}\!j}}
+\newcommand{\notij}{{{\scriptscriptstyle-}\!\{i,j\}}}
+\newcommand{\I}{\mathbb{I}}
 \newcommand{\tto}{\twoheadrightarrow}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,7 +70,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-\begin{spacing}{1.1}
+\begin{spacing}{1.0}
 
 \noindent
 \textbf{Handout 5 answers} \\
@@ -54,13 +88,13 @@ First, to clarify, redistribution mechanism payments\footnote{Conitzer and
   \item Calculating the minimal total pivotal payments for some report of
     $i$
     \begin{align*}
-      T_i = \min_{\theta_i} \sum_{j=1}^n t_j^p(\theta_i, \theta_{-i})
+      T_i(\theta_\noti) = \min_{\theta_i} \sum_{j=1}^n t_j^p(\theta_i, \theta_\noti)
     \end{align*}
   \item Assigning transfers
     \begin{align*}
-      t_i^r(\theta) = t_i^p(\theta) - \frac{1}{n} T_i
+      t_i^r(\theta) = t_i^p(\theta) - \frac{1}{n} T_i(\theta_\noti)
     \end{align*}
-    where $T_i/n$ is the agent's rebate.
+    where $T_i(\theta_\noti)/n$ is the agent's rebate.
   \end{enumerate}
   Alternatively, we can let $T_i$ be the VCG revenue if the agent did not
   participate at all, which is equivalent in many auction settings.
@@ -177,12 +211,12 @@ outcomes for the following applications:
   If A reported zero valuations for all possible allocations, the VCG
   allocation would be the PBR to C and the carrot to B. The total revenue
   would be \$3 since C is pivotal in blocking the PBR and carrot to
-  B. If B reports zero valuations, VCG revenue is \$2. If C reports zeros,
+  B. If B reports zero valuations, VCG revenue is \$4. If C reports zeros,
   the VCG revenue is \$3. Then the redistribution mechanism payments are
 
   \begin{tabular}{lll}
     $t_A^r$ & $= -4 + 3/3$ & $= -3$ \\
-    $t_B^r$ & $= 0 + 2/3$ & $= 2/3$ \\
+    $t_B^r$ & $= 0 + 4/3$ & $= 4/3$ \\
     $t_C^r$ & $= 0 + 3/3$ & $= 1$
   \end{tabular}
 
@@ -214,7 +248,7 @@ outcomes for the following applications:
 
     The minimum cost path is $A\to B \to E \to F$. Since these are costs,
     not valuations, the VCG family of payments is
-    
+
     \begin{tabular}{ll}
     $t_{AB}$ & $-1 -1 + h_A$ \\
     $t_{AC}$ & $-3-1-1 + h_B$ \\
@@ -258,46 +292,48 @@ outcomes for the following applications:
     $t_{CE}^r$ &= $0 - 7/8$ \\
     $t_{CF}^r$ &= $0 - 5/8$ \\
     $t_{DF}^r$ &= $0 - 6/8$ \\
-    $t_{EF}^r$ &= $3 - 7/8$ 
+    $t_{EF}^r$ &= $3 - 7/8$
   \end{tabular}
-  
-  which has a total payment to the Barons of 2 rather than 8. 
+
+  which has a total payment to the Barons of 2 rather than 8.
 
 \item \textit{Multi-unit auction: $k$ units of an identical good are up
-    for sale and each buyer has a valuation $v_i$ for a single item.}  
+    for sale and each buyer has a valuation $v_i$ for a single item.}
 
   The efficient allocation is the $k$-th highest bidders receiving an item
   (with some tie-breaking rules). Then, the VCG family is
   \begin{align*}
-    t_i(v) = \sum_{j \ne i} v_j \mathbb{I}(v_j \ge v_{(n-k)}) + h_i(v_{-i})
+    t_i(v) = \sum_{j \ne i} v_j \mathbb{I}(v_j \ge v_{(n-k+1)}) + h_i(v_{-i})
   \end{align*}
 
   The VCG payments are
   \begin{align*}
-    t_i(v) &= 
+    t_i(v) &=
       \begin{cases}
-        \sum_{j \ne i} v_j \mathbb{I}(v_j \ge v_{(n-k)}) - \sum_{j \ne i}
-        v_j \mathbb{I}(v_j \ge v_{(n-k-1)}) & \mbox{if $i$ gets an item} \\
-        \sum_{j \ne i} v_j \mathbb{I}(v_j \ge v_{(n-k)}) - \sum_{j \ne i}
-        v_j \mathbb{I}(v_j \ge v_{(n-k)}) & \mbox{if $i$ doesn't get
-          an item} 
+        \sum_{j \ne i} v_j \mathbb{I}(v_j \ge v_{(n-k+1)}) - \sum_{j \ne i}
+        v_j \mathbb{I}(v_j \ge v_{(n-k)}) & \mbox{if $i$ gets an item} \\
+        \sum_{j \ne i} v_j \mathbb{I}(v_j \ge v_{(n-k+1)}) - \sum_{j \ne i}
+        v_j \mathbb{I}(v_j \ge v_{(n-k+1)}) & \mbox{if $i$ doesn't get
+          an item}
       \end{cases} \\
       & =
       \begin{cases}
-        -v_{(n-k-1)} & \mbox{if $i$ gets an item} \\
+        -v_{(n-k)} & \mbox{if $i$ gets an item} \\
         0 & \mbox{if $i$ doesn't get an item}
       \end{cases}
   \end{align*}
 
-  If someone with valuation $v_i \ge v_{(n-k-1)}$ had reported zero, the
-  total revenue becomes $k v_{(n-k-2)}$, and otherwise total revenue is
-  unchanged at $k v_{(n-k-1)}$, so redistribution mechanism payments are
+  If someone with valuation $v_i \ge v_{(n-k)}$ had reported zero, the
+  total revenue becomes $k v_{(n-k-1)}$, and otherwise total revenue is
+  unchanged at $k v_{(n-k)}$, so redistribution mechanism payments are
 
   \begin{align*}
-    t_i(v) &= 
+    t_i(v) &=
       \begin{cases}
-        - v_{(n-k-1)} + \frac{k}{n} v_{(n-k-2)} & \mbox{if $i$ gets an item} \\
-        \frac{k}{n} v_{(n-k-1)} & \mbox{if $i$ doesn't get an item}
+        - v_{(n-k)} + \frac{k}{n} v_{(n-k-1)} & \mbox{if $i$ gets an item} \\
+        \frac{k}{n} v_{(n-k-1)} & \mbox{if $i$ is the highest bidder not
+          getting an item} \\
+        \frac{k}{n} v_{(n-k)} & \mbox{if $i$ doesn't get an item}
       \end{cases}
   \end{align*}
 
