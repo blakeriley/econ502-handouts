@@ -25,7 +25,7 @@
 \usepackage[nodayofweek]{datetime} \usdate
 % Pdf metadata
 \pdfinfo{  /Author (Blake Riley)
-           /Title (Econ 502 Handout 5)
+           /Title (Econ 533 Handout 5)
            /Keywords ()
            /ModDate (D:\pdfdate)}
 
@@ -73,22 +73,21 @@
 
 \noindent
 \textbf{Handout 5} \\
-Econ 502 \\
-February 28, 2012 \\
+Econ 533 \\
+March 13, 2015 \\
 TA: Blake Riley \\
 
 \section{Mechanism Design with Money}
 \label{sec:vick-clarke-grov}
 
-Last week we saw how to bypass the Gibbard-Satterthwaite theorem by
-restricting preferences to be single-peaked. Another setting with positive
-results is when agents have quasi-linear preferences over transfers. The
-ability of the mechanism designer to charge or compensate agents opens up
-new possibilities for incentives besides changing the direct outcome. With
-new possibilities comes new problems, though. The designer must to be
-careful agents aren't charged so much they're no longer interested in
-participating. The mechanism might also run a surplus or deficit if
-transfers between agents don't balance out.
+The Gibbard-Satterthwaite theorem applies to mechanisms that work on all possible
+preferences. By restricting the setting, we can recover positive results. One
+particularly fruitful setting is when agents have quasi-linear preferences over
+transfers. The ability of the mechanism designer to charge or compensate agents opens
+up new possibilities for incentives besides changing the direct outcome. With new
+possibilities comes new problems, though. The designer must to be careful agents
+aren't charged so much they're no longer interested in participating. The mechanism
+might also run a surplus or deficit if transfers between agents don't balance out.
 
 \begin{definition}
   Agent $i$ has \textbf{quasi-linear preferences} over transfers iff the
@@ -227,7 +226,7 @@ The work leading up to the VCG was a theoretical
 \emph{tour-de-force}. The characterization of how to achieve
 perfect efficiency in dominant strategies is elegant and
 appealing. However, while shedding insight into the workings of mechanisms,
-it's not something you'd actually want to use. ``Thirteen reasons why the
+it's not necessarily something you'd want to use. ``Thirteen reasons why the
 VCG process is not practical'' (Rothkopf 2007) documents these clearly:
 \begin{enumerate}
 \item the nonexistence of dominant-strategy equilibria in models with reasonable bid preparation costs;
@@ -286,37 +285,6 @@ participant welfare.
 \newpage
 \section{Exercises}
 \label{sec:exercises}
-
-\begin{exercise}
-  Given a set of alternatives $A$ and $n$ players, let $S(\theta) \subset
-  \R^n$ be the image of $A$ under players' utility functions, describing
-  the profiles of feasible utilities. Given some status-quo alternative
-  $\underline{a}$, suppose $S(\theta) \cap \{x: x_i \ge u_i(\underline{a},
-  \theta_i)\}$ is compact and convex. Define the Nash bargaining
-  correspondence as
-  \begin{align*}
-    f^N(\theta) = \underset{\substack{a \in A:\\ u_i(a, \theta_i) \ge
-        u_i(\underline{a}, \theta_i)}}{\operatorname{argmax}}
-    \prod_{i=1}^n \;\;\left(u_i(a, \theta_i)
-    - u_i(\underline{a}, \theta_i)\right)
-  \end{align*}
-  Is $f^N$ well-defined, monotone, or satisfy NVP?
-
-  \hspace{1em}
-  Naeve (1999), ``Nash implementation of the Nash bargaining
-  solution using intuitive message spaces'' provides a mechanism that
-  implements the above correspondence. Ponder this. See also Haake and
-  Trockel (2010), ``On Maskin monotonicity of solution based social choice
-  rules''.
-\end{exercise}
-
-\begin{exercise}
-  (Dutta and Sen (2012), ``Nash Implementation with Partially Honest
-  Individuals'') Assume at least one individual in the population is
-  partially honest, i.e. the agent lexicographically prefers the honest or
-  helpful strategy to deceptive ones. Show NVP is sufficient for Nash
-  implementation.
-\end{exercise}
 
 \begin{exercise}
   Describe the VCG family, pivotal mechanism, and redistribution mechanism
