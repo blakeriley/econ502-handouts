@@ -5,6 +5,7 @@
 \usepackage{graphicx,float,wrapfig}
 %\usepackage{parskip}
 \usepackage{enumerate}
+\usepackage{multirow} % To combine columns in a table
 
 \usepackage{fourier}
 \usepackage[T1]{fontenc}
@@ -36,7 +37,7 @@
    { }% Space after theorem head
    {}% Theorem head spec (can be left empty, meaning `normal')
 \theoremstyle{basic}         
-\newtheorem{exercise}{Exercise}[section]
+\newtheorem{exercise}{Exercise}[]
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -70,11 +71,11 @@
 \noindent
 \textbf{Handout 1} \\
 Econ 533 \\
-January 30, 2015 \\
+January 29, 2016 \\
 TA: Blake Riley \\
 
 \begin{center}
-{\Large Microeconomic Theory II: Spring 2015}
+{\Large Microeconomic Theory II: Spring 2016}
 \end{center}
 
 \section{Static games of complete information}
@@ -167,11 +168,11 @@ order might matter and it sometimes cannot be common knowledge that players
 will not use weakly dominated strategies.
 
 \begin{definition}
-  A game is \textbf{dominance solvable} if iterated deletion of strictly
-  dominated strategies leaves a single strategy profile. Sometimes,
-  dominance solvable is also used to refer to a single strategy profile
-  left after iterated deletion of all weakly dominated strategies at each
-  stage.
+  A game is \textbf{dominance solvable} if iterated deletion of strictly dominated
+  strategies leaves a single strategy profile. Dominance solvable is also used to
+  refer to a single strategy profile left after iterated deletion of all weakly
+  dominated strategies at each stage. Or if all profiles of strategies left after
+  iterated deletion give the same payoffs.
 \end{definition}
 
 \begin{lemma}
@@ -343,6 +344,119 @@ The Leibniz rule for differentiating under the integral sign can be useful while
 deriving FOCs in problems with uncertainty:
 
 \[\frac{d}{d\theta}\int_{a(\theta)}^{b(\theta)} f(x,\theta)\,dx = \frac{d b(\theta)}{d \theta}\,f(b(\theta),\theta)-\frac{d a(\theta)}{d \theta}\,f(a(\theta),\theta)+ \int_{a(\theta)}^{b(\theta)}\frac{\partial}{\partial \theta}\,f(x,\theta)\,dx\]
+
+\newpage
+
+\section{Exercises}
+
+\begin{exercise}
+  Two players simultaneously decide whether or not to contribute to a public
+  good. This is an all-or-nothing decision. The benefit to both if either
+  contributes is $1$ and $0$ otherwise. The individual cost for contributing
+  $c_i$ is drawn from $F$ with support $[\underbar{c}, \bar{c}]$ where $\underbar{c}
+  < 1 < \bar{c}$.
+  \begin{enumerate}
+  \item What are the payoffs given $c_1$ and $c_2$?
+  \item What are the pure strategies for this game?
+  \item What is the expected utility given each player's strategy?
+  \item Define a symmetric BNE for this game.
+  \item Identify a symmetric BNE strategy when $c \sim \operatorname{Unif}[0,2]$.
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+  Identify all Nash and trembling-hand perfect equilibria for the following games:
+
+  \begin{center}
+    {\large
+      % Start multicolumn
+      \begin{tabular}{cc}
+        % Left
+        \begin{tabular}{rcc}
+                                 & C   & D   \\ \cline{2-3}
+          \multicolumn{1}{l|}{A} & 3/3 & 1/0 \\
+          \multicolumn{1}{l|}{B} & 0/0 & 1/1 \\
+        \end{tabular}
+        & \hspace{1in}
+        % Right
+        \begin{tabular}{rcc}
+                                 & L   & R   \\ \cline{2-3}
+          \multicolumn{1}{l|}{U} & 2/2 & 2/2 \\
+          \multicolumn{1}{l|}{M} & 3/3 & 1/0 \\
+          \multicolumn{1}{l|}{D} & 0/0 & 1/1 \\
+        \end{tabular}
+      \end{tabular}}
+  \end{center}
+\end{exercise}
+
+\begin{exercise}
+  A group of $n \ge 2$ agents can make contributions $s_i \in [0,w]$ to the
+  production of a public good. Payoffs are
+  \begin{align*}
+    u_i(s) = n \cdot \min\{s_1, \ldots, s_n\} - s_i
+  \end{align*}
+  What are the pure strategy Nash equilibria of this game?
+\end{exercise}
+
+\begin{exercise}[El-Farol Bar Problem]
+  A bar has 60 seats and 100 people want to go. Each has preferences:
+  \begin{center}
+    go, have a seat $\;\; \succ \;\;$ stay home $\;\; \succ \;\;$ go, no seat
+  \end{center}
+  What are the pure strategy Nash equilibria of this game? 
+\end{exercise}
+
+\begin{exercise}
+  In the following tables of one player's payoffs, what strategies are never a
+  best reply? Which are strictly dominated? In the first set of tables, the player
+  chooses one of the four matrices and the other two choose row and column. In the
+  second table, the player choose the row.
+
+  \begin{center}
+    {\large
+      % Start multicolumn
+      \begin{tabular}{ll}
+        % Left multitable
+        \hspace{-.7in}
+        \begin{tabular}{rr}
+          \begin{tabular}{rcc}
+                                       & $c_1$ & $c_2$   \\ \cline{2-3}
+            \multicolumn{1}{l|}{$r_1$} & 3     & 0 \\
+            \multicolumn{1}{l|}{$r_2$} & 0     & 0 \\
+             & \multicolumn{2}{c}{$m_1$}
+          \end{tabular}
+          &
+          \begin{tabular}{rcc}
+                                       & $c_1$ & $c_2$   \\ \cline{2-3}
+            \multicolumn{1}{l|}{$r_1$} & 0 & 3 \\
+            \multicolumn{1}{l|}{$r_2$} & 3 & 0 \\
+            & \multicolumn{2}{c}{$m_3$}
+          \end{tabular} \\[.5in] 
+          \begin{tabular}{rcc}
+                                       & $c_1$ & $c_2$   \\ \cline{2-3}
+            \multicolumn{1}{l|}{$r_1$} & 0 & 0 \\
+            \multicolumn{1}{l|}{$r_2$} & 0 & 3 \\
+            & \multicolumn{2}{c}{$m_3$}
+          \end{tabular}
+          & 
+          \begin{tabular}{rcc}
+                                       & $c_1$ & $c_2$   \\ \cline{2-3}
+            \multicolumn{1}{l|}{$r_1$} & 2 & 0 \\
+            \multicolumn{1}{l|}{$r_2$} & 0 & 2 \\
+            & \multicolumn{2}{c}{$m_4$}
+          \end{tabular} \\
+        \end{tabular}
+        & \hspace{.5in}
+        % Right table
+        \begin{tabular}{rcc}
+          & L   & R   \\ \cline{2-3}
+          \multicolumn{1}{l|}{U} & 3/- & 0/- \\
+          \multicolumn{1}{l|}{M} & 0/- & 3/- \\
+          \multicolumn{1}{l|}{D} & 1/- & 1/- \\
+        \end{tabular}
+      \end{tabular}}
+  \end{center}
+\end{exercise}
 
 %%%%%%%%%%%%%%%
 \end{spacing}

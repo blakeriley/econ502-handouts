@@ -1,4 +1,4 @@
-\documentclass[letter, 10pt]{article}
+\documentclass[10pt]{article}
 % Change "article" to "report" to get rid of page number on title page
 \usepackage{amsmath,amsfonts,amsthm,amssymb}
 \usepackage{setspace}
@@ -9,6 +9,15 @@
 \usepackage{fourier}
 \usepackage[T1]{fontenc}
 \usepackage[protrusion=true,expansion=true]{microtype}
+
+
+\usepackage{tikz} % For drawing diagrams
+\usetikzlibrary{calc}
+\tikzset{
+% Two node styles for game trees: solid and hollow
+solid node/.style={circle,draw,inner sep=1.5,fill=black},
+hollow node/.style={circle,draw,inner sep=1.5}
+}
 
 % In case you need to adjust margins:
 \topmargin=-0.45in      %
@@ -36,7 +45,7 @@
    { }% Space after theorem head
    {}% Theorem head spec (can be left empty, meaning `normal')
 \theoremstyle{basic}
-\newtheorem{exercise}{Exercise}[section]
+\newtheorem{exercise}{Exercise}[]
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -70,11 +79,11 @@
 \noindent
 \textbf{Handout 2} \\
 Econ 533 \\
-February 6, 2014 \\
+February 5, 2016 \\
 TA: Blake Riley \\
 
 \begin{center}
-{\Large Microeconomic Theory II: Spring 2015}
+{\Large Microeconomic Theory II: Spring 2016}
 \end{center}
 
 \section{Refinements in dynamic games}
@@ -215,6 +224,118 @@ Sequential equilibria are WPBE and SPNE.
 \item If you show that $(\sigma, \mu)$ is a WPBE, but not a SPNE, then it
   is not a sequential equilibrium.
 \end{itemize}
+
+\newpage
+\section{Exercises}
+
+\begin{exercise}
+  If a player has $N$ information sets with $m_i$ choices at the $i$-th, how many
+  strategies does that player have?
+\end{exercise}
+
+\begin{exercise}
+  Find all the SPNEs and WPNEs:
+  \begin{center}
+    \begin{tikzpicture}[scale=1,font=\footnotesize]
+      % Specify spacing for each level of the tree
+      \tikzstyle{level 1}=[level distance=15mm,sibling distance=35mm]
+      \tikzstyle{level 2}=[level distance=15mm,sibling distance=15mm]
+      % The Tree
+      \node(0)[solid node,label=above:{P1}]{}
+      child[missing] % Missing very left node to balance tree
+      % Actual left node
+      child{node(1)[solid node]{} child{node[hollow node,label=below:{$(6,3)$}]{}
+          edge from parent node[left]{$\ell$} } child{node[hollow
+          node,label=below:{$(3,0)$}]{} edge from parent node[right]{$r$} } edge from
+        parent node[left,xshift=-3]{$L$} }
+      % Right node
+      child{node(2)[solid node]{} child{node[hollow node,label=below:{$(0,0)$}]{}
+          edge from parent node[left]{$\ell$} coordinate[pos=.8] (l)}
+        child{node[hollow node,label=below:{$(2,1)$}]{} edge from parent
+          node[right]{$r$} coordinate[pos=.8] (r)} edge from parent
+        node[right,xshift=3]{$R$} } child[grow=right, level distance = 25mm]{
+        node[hollow node, label=below:{$(4,2)$}]{} edge from parent node[above]{$A$}
+      } ;
+      % information set
+      \draw[dashed,rounded corners=8]($(1) + (-.2,.3)$)rectangle($(2) +(.2,-.3)$);
+      % specify mover at 2nd information set
+      \node at ($(1)!.5!(2)$) {P2};
+    \end{tikzpicture}
+  \end{center}
+\end{exercise}
+
+\begin{exercise} Consider the following game tree:
+  \begin{center}
+      \begin{tikzpicture}[scale=1,font=\footnotesize]
+        % Specify spacing for each level of the tree
+        \tikzstyle{level 1}=[level distance=15mm,sibling distance=35mm]
+        \tikzstyle{level 2}=[level distance=15mm,sibling distance=15mm]
+        % The Tree
+        \node(0)[solid node,label=above:{P1}]{}
+        child{node(1)[solid node]{}
+          child{node[hollow node,label=below:{$(a,b)$}]{}
+            edge from parent node[left]{$C$} }
+          child{node[hollow node,label=below:{$(c,d)$}]{}
+            edge from parent node[right]{$D$} }
+          edge from parent node[left,xshift=-3]{$A$}
+        }
+        child{node(2)[solid node]{}
+          child{node[hollow node,label=below:{$(e,f)$}]{}
+            edge from parent node[left]{$C$}}
+          child{node[hollow node,label=below:{$(g,h)$}]{}
+            edge from parent node[right]{$D$}}
+          edge from parent node[right,xshift=3]{$B$}
+        };
+        %%% uncomment to draw information set
+        % \draw[dashed,rounded corners=10]($(1) +
+        % (-.2,.25)$)rectangle($(2) +(.2,-.25)$);
+        % % specify mover at 2nd information set
+        % \node at ($(1)!.5!(2)$) {$P2$};
+      \end{tikzpicture}
+    \end{center} 
+  \begin{enumerate}
+  \item How many SPNEs are there in this game? Are there other Nash equilibria in
+    pure strategies?
+  \item Suppose player two cannot observe player one's move. What is the new
+    extensive form? What are the Nash equilibria?
+  \item Suppose player two observes correctly with probability $p \in (0,1)$ and
+    incorrectly with probability $1-p$ where $p$ is common knowledge. What is the
+    extensive form? What is the set of WPNEs (in pure strategies)?    
+  \end{enumerate}  
+\end{exercise}
+
+\begin{exercise}[Ultimatum Game] Player one chooses an amount $x \in [0,1]$ which
+  player two has the option to accept or reject. What are the SPNEs of this game?
+  \begin{center}
+    \begin{tikzpicture}[scale=1.5,font=\footnotesize]
+      % Specify spacing for each level of the tree
+      \tikzstyle{level 1}=[level distance=15mm,sibling distance=10mm]
+      \tikzstyle{level 2}=[level distance=15mm,sibling distance=15mm]
+      % The Tree
+      \node(head)[solid node, label=above:{P1}]{}
+      % Left branch with invisible node
+      child{node[solid node, white]{} edge from parent coordinate[pos=.9] (lbranch)}
+      % Middle branch
+      child{ node[yshift=3]{$x$} % Add label for arc
+        node[solid node, yshift=-20, label=above:{P2}]{} child{node[hollow
+          node,label=below:{$(0,0)$}]{} edge from parent node[left]{$R$}}
+        child{node[hollow node,label=below:{$(x,1-x)$}]{} edge from parent
+          node[right]{$A$}} edge from parent
+        [draw=none] % Hide edge from head to middle branch
+      }
+      % Right branch with hidden node
+      child{node[solid node, white]{} edge from parent coordinate[pos=.9] (rbranch)}
+      ;
+      % Draw arc
+      \draw[dashed,bend right] (lbranch) to (rbranch);
+    \end{tikzpicture}
+  \end{center}  
+\end{exercise}
+
+
+
+
+
 
 %%%%%%%%%%%%%%%
 \end{spacing}
