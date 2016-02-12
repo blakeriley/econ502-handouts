@@ -10,6 +10,14 @@
 \usepackage[T1]{fontenc}
 \usepackage[protrusion=true,expansion=true]{microtype}
 
+\usepackage{tikz} % For drawing diagrams
+\usetikzlibrary{calc}
+\tikzset{
+% Two node styles for game trees: solid and hollow
+solid node/.style={circle,draw,inner sep=1.5,fill=black},
+hollow node/.style={circle,draw,inner sep=1.5}
+}
+
 % In case you need to adjust margins:
 \topmargin=-0.45in      %
 \evensidemargin=0in     %
@@ -36,7 +44,7 @@
    { }% Space after theorem head
    {}% Theorem head spec (can be left empty, meaning `normal')
 \theoremstyle{basic}
-\newtheorem{exercise}{Exercise}[section]
+\newtheorem{exercise}{Exercise}[]
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -70,7 +78,7 @@
 \noindent
 \textbf{Handout 3} \\
 Econ 533 \\
-February 26, 2015 \\
+February 12, 2016 \\
 TA: Blake Riley \\
 
 \section{Finitely repeated games}
@@ -184,11 +192,151 @@ partially observable.
 
 \begin{theorem}
   (Aumann and Shapley 1976, Rubinstein 1979) Even without discounting,
-  every feasible and enforceable vector of payoffs is acheivable in a
+  every feasible and enforceable vector of payoffs is achievable in a
   subgame perfect Nash equilibrium.
 \end{theorem}
 
+\newpage
+\section{Exercises}
 
+\begin{exercise}
+  Find all WPNEs and sequential equilibria:
+  \begin{center}
+    \begin{tikzpicture}[scale=1,font=\footnotesize]
+      % Specify spacing for each level of the tree
+      \tikzstyle{level 1}=[level distance=15mm,sibling distance=35mm]
+      \tikzstyle{level 2}=[level distance=15mm,sibling distance=15mm]
+      % The Tree
+      \node(0)[solid node,label=above:{E}]{}
+      child[missing] % Missing very left node to balance tree
+      % Actual left node
+      child{node(1)[solid node]{} child{node[hollow node,label=below:{$(6,3)$}]{}
+          edge from parent node[left]{$\ell$} } child{node[hollow
+          node,label=below:{$(3,0)$}]{} edge from parent node[right]{$r$} } edge from
+        parent node[left,xshift=-3]{IN1} }
+      % Right node
+      child{node(2)[solid node]{} child{node[hollow node,label=below:{$(0,0)$}]{}
+          edge from parent node[left]{$\ell$} coordinate[pos=.8] (l)}
+        child{node[hollow node,label=below:{$(2,1)$}]{} edge from parent
+          node[right]{$r$} coordinate[pos=.8] (r)} edge from parent
+        node[right,xshift=3]{IN2} }
+      % Right branch
+      child[grow=right, level distance = 25mm]{
+        node[hollow node, label=below:{$(4,2)$}]{} edge from parent node[above]{OUT}
+      } ;
+      % information set
+      \draw[dashed,rounded corners=8]($(1) + (-.2,.3)$)rectangle($(2) +(.2,-.3)$);
+      % specify mover at 2nd information set
+      \node at ($(1)!.5!(2)$) {I};
+    \end{tikzpicture}
+  \end{center}
+\end{exercise}
+
+\begin{exercise}
+  Find all WPNEs and sequential equilibria:
+  \begin{center}
+    \begin{tikzpicture}[scale=1,font=\footnotesize]
+      % Specify spacing for each level of the tree
+      \tikzstyle{level 1}=[level distance=15mm,sibling distance=35mm]
+      \tikzstyle{level 2}=[level distance=15mm,sibling distance=15mm]
+      % The Tree
+      \node(0)[solid node,label=above:{E}]{}
+      child[missing] % Missing very left node to balance tree
+      % Actual left node
+      child{node(1)[solid node]{} child{node[hollow node,label=below:{$(4,0)$}]{}
+          edge from parent node[left]{$\ell$} } child{node[hollow
+          node,label=below:{$(2,2)$}]{} edge from parent node[right]{$r$} } edge from
+        parent node[left,xshift=-3]{IN1} }
+      % Right node
+      child{node(2)[solid node]{} child{node[hollow node,label=below:{$(0,3)$}]{}
+          edge from parent node[left]{$\ell$} coordinate[pos=.8] (l)}
+        child{node[hollow node,label=below:{$(3,0)$}]{} edge from parent
+          node[right]{$r$} coordinate[pos=.8] (r)} edge from parent
+        node[right,xshift=3]{IN2} }
+      % Right branch
+      child[grow=right, level distance = 25mm]{
+        node[hollow node, label=below:{$(2,2)$}]{} edge from parent node[above]{OUT}
+      } ;
+      % information set
+      \draw[dashed,rounded corners=8]($(1) + (-.2,.3)$)rectangle($(2) +(.2,-.3)$);
+      % specify mover at 2nd information set
+      \node at ($(1)!.5!(2)$) {I};
+    \end{tikzpicture}
+  \end{center}
+  What if the payoff for the entrant playing OUT changes to 3?
+\end{exercise}
+
+\begin{exercise}
+  Consider a two-stage game where, first, workers and employers pick inflation
+  expectations $\pi_e$ when bargaining over nominal wages, with payoffs
+  \begin{align*}
+    W(\pi_e; \pi) = - (\pi - \pi_e)^2
+  \end{align*}
+ Second, the central bank sets monetary policy with a tradeoff between inflation and
+ higher employment from inflation above expectation. The bank chooses $\pi$ to
+ maximize
+ \begin{align*}
+   U(\pi; \pi_e) = -c\pi^2 - (y^* - y)^2
+ \end{align*}
+ where $y^*$ is the target output, $y = b y^* + d(\pi - \pi_e)$ is actual output with
+ parameters $b < 1$ and $c,d > 0$.
+
+ \vspace{1em}
+ Solve for the SPNE. The consider infinite repetition of this game with both having
+ discount factor $\delta$. Find conditions and trigger strategies such that $\pi =
+ \pi_e = 0$ in each period.
+\end{exercise}
+
+\begin{exercise}
+  Consider the following game repeated twice: 
+  \begin{center}
+    \begin{tabular}{rccc}
+                                 & $a_2$ & $b_2$ & $c_2$  \\ \cline{2-4}
+      \multicolumn{1}{l|}{$a_1$} & 10, 10 & 2, 12  & 0, 13 \\
+      \multicolumn{1}{l|}{$b_1$} & 12, 2  & 5, 5   & 0, 0  \\
+      \multicolumn{1}{l|}{$c_1$} & 13, 0  & 0, 0   & 1, 1  \\
+    \end{tabular}
+  \end{center}
+  \begin{enumerate}
+  \item How many subgames are there?
+  \item What are the NE of the final subgames?
+  \item How many equilibria paths are there in symmetric SPNE?
+  \item How many symmetric SPNEs exist?
+  \end{enumerate}
+\end{exercise}
+
+\newpage
+\begin{exercise}
+  Diagram the feasible payoffs that can be achieved when infinitely repeating the
+  following stage games:
+  \begin{enumerate}
+  \item Prisoners' Dilemma
+    \begin{center}
+      \begin{tabular}{rcc}
+        &  &    \\ \cline{2-3}
+        \multicolumn{1}{l|}{} & 10, 10 & 0, 12  \\
+        \multicolumn{1}{l|}{} & 12, 0  & 5, 5   \\
+      \end{tabular}
+    \end{center}
+  \item Battle of the Sexes
+    \begin{center}
+      \begin{tabular}{rcc}
+        &  &    \\ \cline{2-3}
+        \multicolumn{1}{l|}{} & 2, 1 & 0, 0  \\
+        \multicolumn{1}{l|}{} & 0, 0 & 1, 2  \\
+      \end{tabular}
+    \end{center}
+  \item Extended Prisoners' Dilemma
+    \begin{center}
+    \begin{tabular}{rccc}
+      &  &  &  \\ \cline{2-4}
+      \multicolumn{1}{l|}{} & 10, 10 & 0, 12  & 0, 0 \\
+      \multicolumn{1}{l|}{} & 12, 0  & 5, 5   & 1, 1  \\
+      \multicolumn{1}{l|}{} & 0, 0   & 1, 1   & 0, 0  \\
+    \end{tabular}
+  \end{center}
+  \end{enumerate}
+\end{exercise}
 
 %%%%%%%%%%%%%%%
 \end{spacing}
