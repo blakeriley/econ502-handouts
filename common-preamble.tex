@@ -1,0 +1,68 @@
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{setspace}
+\usepackage{graphicx,float,wrapfig}
+%\usepackage{parskip}
+\usepackage{enumerate}
+\usepackage{url}
+
+\usepackage{fourier}
+\usepackage[T1]{fontenc}
+\usepackage[protrusion=true,expansion=true]{microtype}
+
+% In case you need to adjust margins:
+\topmargin=-0.45in      %
+\evensidemargin=0in     %
+\oddsidemargin=0in      %
+\textwidth=6.5in        %
+\textheight=9.0in       %
+\headsep=0.25in         %
+\parindent=0in
+
+\usepackage[nodayofweek]{datetime} \usdate
+% Pdf metadata
+\pdfinfo{  /Author (\Name)
+           /Title (Economics 533 Handout \HandoutNumber)
+           /Keywords ()
+           /ModDate (D:\pdfdate)}
+
+\newtheoremstyle{basic}% name
+   {5pt}% Space above
+   {5pt}% Space below
+   {\itshape \leftskip=1em}% Body font
+   {-1em}% Indent amount
+   {\bfseries}% Theorem head font
+   {:}% Punctuation after theorem head
+   { }% Space after theorem head
+   {}% Theorem head spec (can be left empty, meaning `normal')
+\theoremstyle{basic}
+\newtheorem{exercise}{Exercise}[]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\usepackage{tikz} % For drawing diagrams
+\usetikzlibrary{calc}
+\tikzset{
+% Two node styles for game trees: solid and hollow
+solid node/.style={circle,draw,inner sep=1.5,fill=black},
+hollow node/.style={circle,draw,inner sep=1.5}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Custom commands
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\E}{\operatorname{E}}
+\renewcommand{\P}{\operatorname{Pr}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\cond}{\,|\,}
+\newcommand{\bigcond}{\;\big|\;}
+\newcommand{\argmax}{\mathop{\operatorname{arg\,max}}}
+\newcommand{\noti}{{{\scriptscriptstyle-}\!i}}
+\newcommand{\notj}{{{\scriptscriptstyle-}\!j}}
+\newcommand{\notij}{{{\scriptscriptstyle-}\!\{i,j\}}}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\tto}{\twoheadrightarrow}
