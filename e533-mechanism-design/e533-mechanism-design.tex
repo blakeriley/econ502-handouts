@@ -4,7 +4,7 @@
 \def\TheDate{February 26, 2016}
 \def\Name{Blake Riley}
 
-\input{../common-header.tex}
+\input{../common-preamble.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% The main document content
@@ -263,59 +263,17 @@ true. We'll need another condition:
   \end{enumerate}
 \end{exercise}
 
-\begin{exercise}[Sprumont 1991]
-  One useful restriction of preferences is \emph{single-peakedness}. If the
-  set of options $X$ is single-dimensional and ordered, then a preference
-  ordering $\succ$ on $X$ is single-peaked iff there is a maximum $x^*$ of
-  $\succ$ and $x^* < x < y$ or $y < x < x^* \implies x \succ y$.
-
-  \hspace{1em}
-  Consider a partnership of $n$ individuals who will invest in a project,
-  with the benefits shared in proportion to each partner's investment. The
-  project has a fixed cost of $1$. The partners have single-peaked
-  preferences over the amount they want to invest, with a peaks $x_i^* \in
-  [0,1]$. Because the sum of the peak amount of all partners may not be
-  equal to the cost of the project, some partners may be forced to invest
-  more or less than their ideal amounts. In this context, efficiency means
-  that if the sum of ideal investments is less than the cost, everyone must
-  invest at least their ideal amount, and vice versa.
-
-  \hspace{1em}
-  In addition to strategy-proofness and efficiency, let's consider two
-  other desirable properties of social choice functions. First, an scf is
-  \emph{anonymous} if $f(\theta)=f(\pi(\theta))$ for all permutations $\pi$
-  of the vector. Second, an scf is \emph{envy-free} if for all $i,j$,
-  $f_i(\theta) \succeq_i f_j(\theta)$, i.e. the proportion allocated to $i$
-  is preferred by $i$ to all other agents' allocations.
-
-  \hspace{1em}
-  Check whether the following are strategy-proof,
-  efficient, anonymous, and/or envy-free:
+\begin{exercise}[Dutta and Sen (2012), ``Nash implementation with partially honest individuals'']
+  Suppose an individual has preferences over which message they send in addition to
+  preferences over outcomes. In particular, suppose individuals don't like to lie
+  when it doesn't help them. Let's call an agent \emph{partially honest} if
   \begin{enumerate}
-  \item The egalitarian rule $f_i^e(\theta) = 1/n$.
-  \item The proportional rule $f_i^p(\theta) = x_i^*/\sum x_j^*$.
-  \item The priority rule $f_1^q(\theta) = x_1^*$ and
-    $f_i^q(\theta) = \min\{x_i^*, 1-\sum_{j<i} x_j^*\}$
-    when $\sum x_i^* \geq 1$, and alternately $f_j^q(\theta) = x_j^*$
-    for $j < n$ and $f_n^q(\theta) = 1 - \sum_{j=1}^{n-1}
-    x_j^*$ when $\sum x^i < 1$.
-  \item The priority rule as defined above, but with a random order.
-  \item The uniform rule defined by the iterative process (for the case of
-    $\sum x_i^* > 1$):
-    \begin{enumerate}
-    \item Start with all partners active and the full cost outstanding.
-    \item Divide the outstanding cost equally among the active partners.
-    \item If any active partner has an ideal below the equal
-      share, set their share equal to their ideal and
-      subtract this from the outstanding cost. These
-      partners are now inactive.
-    \item Repeat the previous two steps among the active
-      partners until each has an ideal amount no less
-      than the equal share of the outstanding cost.
-    \end{enumerate}
-
+  \item For $a \succ_i b$, the preference over outcome/message pairs are strict: $(a, m_i') \succ_i (b, m_i''),\;\forall m_i', m_i''$
+  \item For $a \sim_i b$ and $m_i^*$ is the honest message, the agent strictly
+    prefers to be honest: $(a, m_i^*) \succ_i (b, m_i'), \; \forall m_i' \ne m_i^*$
   \end{enumerate}
-
+  Show: If $n \ge 3$ and at least one agents is partially honest, then any SCR
+  satisfying No Veto Power is fully Nash implementable.
 \end{exercise}
 
 
